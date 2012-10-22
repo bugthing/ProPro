@@ -6,7 +6,11 @@ abit bogged down with having to manage every aspect myself (which my my failing,
 not Perl!) .. I thought I'd give it another blast, this time using Ruby and Rails.
 
 It is a re-write of Flowella, this time it should be cleaner and using Rails 
-should be abit nicer to manage
+should be abit nicer to manage.
+
+I am using [OpenShift](http://propro-bugthing.rhcloud.com/) to host this project
+as not only do RedHat provide a greate service for free, but if (for some amazing
+reason) it gets used, it can be easily stepped up.
 
 ToDo
 ====
@@ -15,6 +19,4 @@ ToDo
 *  Add EmberJS
 *  User sign up
 *  API Access control (token based)
-
-
 
