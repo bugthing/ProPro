@@ -1,4 +1,4 @@
-source 'http://mirror1.prod.rhcloud.com/mirror/ruby/'
+#source 'http://mirror1.prod.rhcloud.com/mirror/ruby/'
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
@@ -9,7 +9,6 @@ gem 'rails', '3.2.6'
 gem 'mysql2'
 gem 'sqlite3'
 
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -17,15 +16,13 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
+  gem 'therubyracer', :platforms => :ruby
+  gem 'less-rails-bootstrap'
 
   gem 'uglifier', '>= 1.0.3'
 end
 
 gem 'jquery-rails'
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
@@ -44,3 +41,7 @@ gem 'thor', '= 0.14.6'
 
 # This needs to be installed so we can run Rails console on OpenShift directly
 gem 'minitest'
+
+gem 'ruby-prof'
+
+gem 'bcrypt-ruby', '~> 3.0.0', :require => "bcrypt"
