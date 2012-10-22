@@ -1,0 +1,38 @@
+
+@import 'twitter/bootstrap';
+
+// ********** Custom colours **********************
+
+@blueDark: darken(@blue, 10);
+@blueLight: lighten(@blue, 5);
+
+// ********** Override bootstrap ******************
+
+.btn {
+  &.primary {
+    color: @white;
+    .gradientBar(@blue, @blueDark)
+  }
+}
+.navbar-inverse .navbar-inner {
+
+  .brand {
+    color: @white;
+  }
+
+  .nav {
+    a:hover {
+      color: @blueDark;
+      background-color: @white;
+    }
+    .active > a {
+      color: @blueLight;
+    }
+  }
+
+  .nav > li > a {
+    color: @white;
+  }
+
+  background-image: linear-gradient(to bottom, @blueLight, @blueDark);
+}
