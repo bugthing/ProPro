@@ -1,0 +1,7 @@
+user_one:
+  email: "dave@people.com"
+  user_group: user_group_one
+
+user_two:
+  email: "humpfrey@people.com"
+  user_group: user_group_one

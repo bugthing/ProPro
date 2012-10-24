@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+section_one:
+  name: Section One
+  chart: chart_one
+
+section_two:
+  name: Section Two
+  chart: chart_one
+
+section_three:
+  name: Section Three
+  chart: chart_one
