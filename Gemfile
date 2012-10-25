@@ -21,6 +21,9 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
 end
+group :test do
+  gem 'shoulda'
+end
 
 gem 'jquery-rails'
 
@@ -41,7 +44,5 @@ gem 'thor', '= 0.14.6'
 
 # This needs to be installed so we can run Rails console on OpenShift directly
 gem 'minitest'
-
 gem 'ruby-prof'
-
 gem 'bcrypt-ruby', '~> 3.0.0', :require => "bcrypt"

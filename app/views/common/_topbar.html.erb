@@ -1,6 +1,6 @@
 <div class="navbar-inner">
   <div class="container-fluid">
-    <a class="brand" href="#">ProPro</a>
+    <%= link_to "ProPro", :root, :class => "brand" %>
     <div class="nav-collapse collapse">
       <% if @user %>
 
@@ -10,18 +10,18 @@
 
       <% else %>
 
-        <form class="navbar-form pull-right">
-          <input class="span2" type="text" placeholder="Email">
-          <input class="span2" type="password" placeholder="Password">
-          <button type="submit" class="btn">Sign in</button>
-        </form>
+<%= form_tag(sessions_path, :class => "navbar-form pull-right") do %>
+  <%= text_field_tag :email, params[:email], :placeholder => "Email", :class => "span2"  %>
+  <%= password_field_tag :password, :placeholder => "Password", :class => "span2" %>
+  <%= submit_tag "Log in", :class => "btn" %>
+<% end %>
 
       <% end %>
 
       <ul class="nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="">About</a></li>
-        <li><a href="">Build</a></li>
+        <li class="<%= current_page?( :controller => 'home', :action => 'index' )    ? 'active' : '' %>"> <%= link_to "Home", :root %> </li>
+        <li class="<%= current_page?( :controller => 'home', :action => 'about' )    ? 'active' : '' %>"> <%= link_to "About", :about %> </li>
+        <li class="<%= current_page?( :controller => 'builder' ) ? 'active' : '' %>"> <%= link_to "Build", :builder %> </li>
       </ul>
 
     </div>
