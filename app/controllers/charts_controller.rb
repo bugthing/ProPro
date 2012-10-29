@@ -12,7 +12,6 @@ class ChartsController < ApplicationController
   end
 
   def create
-    puts "GOOD!"
     chart.save
     respond_with chart
   end

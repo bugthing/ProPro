@@ -16,20 +16,13 @@ class ChartsControllerTest < ActionController::TestCase
     end
 
     context 'restful api (get)' do
-      setup { get :index,  {format: :json} }
+      setup { get :index,  format: :json }
       should respond_with(:success)
     end
 
     context 'restful api (post)' do
-      setup { 
-        post :create,
-        {chart: { name: 'Test Chart Three'}},
-        {format: :json}
-      #puts "****>#{ @request.headers }<****************"
-      #puts "****>#{ @response.inspect }<****************"
-      }
-      #, {:chart => { :name => 'Test Chart Three'}},  {format: :json} }
-      #should respond_with(:success)
+      setup { post :create, chart: { name: 'Test Chart Three'}, format: :json }
+      should respond_with(:created)
     end
   end
 
