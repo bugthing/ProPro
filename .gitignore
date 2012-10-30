@@ -13,3 +13,6 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignore pre-compiled files (I think that is the right thing to do?)
+/public/assets/*
