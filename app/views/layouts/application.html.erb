@@ -5,6 +5,7 @@
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
+    <%= yield :custom_head_tag %>
   </head>
   <body>
 
@@ -16,7 +17,6 @@
 
       <div class="row-fluid">
         <%= render :partial => 'common/flashes' %>
-        <%= yield :sidebar %>
         <%= yield %>
       </div>
 

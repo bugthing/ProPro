@@ -46,3 +46,4 @@ gem 'thor', '= 0.14.6'
 gem 'minitest'
 gem 'ruby-prof'
 gem 'bcrypt-ruby', '~> 3.0.0', :require => "bcrypt"
+gem "ember-rails"

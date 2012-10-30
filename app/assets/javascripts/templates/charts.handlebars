@@ -1,0 +1,6 @@
+
+<b> CHARTS </b>
+
+{{#each chart in controller}}
+  <h1><a {{action showChart chart href=true}}>{{chart.name}}</a></h1>
+{{/each}}

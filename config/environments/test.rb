@@ -34,4 +34,10 @@ RailsApp::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+
+
+  #config.ember.variant = :production
+  config.ember.variant = :development
+  config.handlebars.precompile = false
 end
