@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Propro</title>
+
+<script src="/assets/jquery.js?body=1" type="text/javascript"></script>
+<script src="/assets/jquery_ujs.js?body=1" type="text/javascript"></script>
+<script src="/assets/handlebars.js?body=1" type="text/javascript"></script>
+<script src="/assets/ember.js?body=1" type="text/javascript"></script>
+<script src="/assets/ember-data.js?body=1" type="text/javascript"></script>
+
+<script type="text/x-handlebars" data-template-name="application">
+    <div class='container' id='application'>
+        <header>
+            <h1>People</h1>
+        </header>
+        <article>
+            {{outlet}}
+        </article>
+    </div>    
+</script>
+
+<script type="text/x-handlebars" data-template-name="people">
+    <ul>
+        {{#each person in controller}}
+            <li>{{person.firstName}} {{person.lastName}}</li>
+        {{/each}}
+    </ul>
+    <button {{action newPerson }}>Create New Person</button>
+    <hr/>
+    {{outlet}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="person_create">
+    First name: {{view Ember.TextField valueBinding="firstName"}} <br/>
+    Last name: {{view Ember.TextField valueBinding="lastName"}} <br/>
+    <button {{action submitForm }}>Save</button>
+    <button {{action cancel }}>Cancel</button>
+    <h3>Current values: {{firstName}} {{lastName}}</h3>
+</script>
+
+<script language='javascript'>
+
+App = Ember.Application.create();
+
+App.Person = DS.Model.extend({
+    firstName: DS.attr('string'),
+    lastName: DS.attr('string')
+});
+
+// Note: these properties are expected to be dasherized
+App.Person.FIXTURES = [
+{
+    "id": 1,
+    "first_name": "Joe",
+    "last_name": "Smith"
+},
+{
+    "id": 2,
+    "first_name": "James",
+    "last_name": "Dolan"
+},
+{
+    "id": 3,
+    "first_name": "Jim",
+    "last_name": "Carry"
+}
+];
+
+App.Store = DS.Store.extend({
+    revision: 4,
+    adapter: DS.FixtureAdapter.create()
+});
+
+/*
+ * Routing
+ */
+App.Router = Ember.Router.extend({
+
+    enableLogging: true,
+
+    root: Ember.Route.extend({
+        index: Ember.Route.extend({
+            route: '/',
+            connectOutlets: function(router, people) {
+                // set the content to all available persons
+                router.get('peopleController').set('content', App.Person.find());
+                router.get("applicationController").connectOutlet("people");
+            },
+            index: Ember.Route.extend({
+                route: '/'
+            }),
+            create: Ember.Route.extend({
+                route: '/create',
+                connectOutlets: function(router, person) {
+                    // set/clear the content for the personCreateController
+                    router.get('personCreateController').set('content', {});
+                    router.get("peopleController").connectOutlet("personCreate");
+                },
+
+                // as proposed in https://github.com/emberjs/ember.js/pull/1139
+                exit: function(router) {
+                    // called when we navigate away from this route: remove
+                    // the connected outlet, which is the createPerson view
+                    router.get('peopleController').set('view', null);
+                },
+
+                submitForm: function(router, event) {
+                    // get the content of the personCreateController
+                    var hash = router.getPath('personCreateController.content');
+                    // create a new person
+                    App.Person.createRecord(hash);
+                    // navigate back to the index route
+                    router.transitionTo('index');
+                },
+
+                // cancel button pressed
+                cancel: Ember.Route.transitionTo('index')
+            }),
+
+            // show the "dialog" for creating a new person
+            newPerson: Ember.Route.transitionTo('create')
+        })
+    })
+});
+
+App.ApplicationController = Ember.Controller.extend();
+App.PeopleController = Ember.ArrayController.extend({store: App.Store.create({})});
+App.PersonCreateController = Ember.ObjectController.extend();
+
+App.ApplicationView = Ember.View.extend({ templateName: 'application' });
+App.PeopleView = Ember.View.extend({ templateName: 'people' });
+App.PersonCreateView = Ember.View.extend({ templateName: 'person_create' });
+
+App.initialize();
+
+</script>
+  </head>
+  <body>
+
+  </body>
+</html>
+
