@@ -1,0 +1,10 @@
+<form class="navbar-form pull-left">
+    <fieldset>
+        <legend>New Chart</legend>
+        <label>Name</label>
+        {{view Ember.TextField valueBinding="name" placeholder="New chart name..."}} <br/>
+        <span class="help-block">{{name}}</span>
+        <button {{action submitForm }} class="btn btn-large btn-primary">Save</button>
+        <button {{action cancel }} class="btn">Cancel</button>
+    </fieldset>
+</form>

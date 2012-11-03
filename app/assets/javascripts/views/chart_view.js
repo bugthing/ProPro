@@ -1,4 +1,3 @@
-App.ChartView = Ember.View.extend({
-    templateName: "chart"
-})
-
+//App.ChartView = Ember.View.extend({
+//    templateName: "chart"
+//});

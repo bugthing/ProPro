@@ -1,3 +1,3 @@
-App.ChartController = Ember.Controller.extend({
-    store: App.Store.create()
-});
+//App.ChartController = Ember.Controller.extend({
+//    store: App.Store.create()
+//});

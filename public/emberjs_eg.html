@@ -23,7 +23,7 @@
 <script type="text/x-handlebars" data-template-name="people">
     <ul>
         {{#each person in controller}}
-            <li>{{person.firstName}} {{person.lastName}}</li>
+            <li>{{person.name}} {{person.lastName}}</li>
         {{/each}}
     </ul>
     <button {{action newPerson }}>Create New Person</button>
@@ -32,11 +32,11 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="person_create">
-    First name: {{view Ember.TextField valueBinding="firstName"}} <br/>
+    First name: {{view Ember.TextField valueBinding="name"}} <br/>
     Last name: {{view Ember.TextField valueBinding="lastName"}} <br/>
     <button {{action submitForm }}>Save</button>
     <button {{action cancel }}>Cancel</button>
-    <h3>Current values: {{firstName}} {{lastName}}</h3>
+    <h3>Current values: {{name}} {{lastName}}</h3>
 </script>
 
 <script language='javascript'>
@@ -44,7 +44,7 @@
 App = Ember.Application.create();
 
 App.Person = DS.Model.extend({
-    firstName: DS.attr('string'),
+    name: DS.attr('string'),
     lastName: DS.attr('string')
 });
 
@@ -52,17 +52,17 @@ App.Person = DS.Model.extend({
 App.Person.FIXTURES = [
 {
     "id": 1,
-    "first_name": "Joe",
+    "name": "Joe",
     "last_name": "Smith"
 },
 {
     "id": 2,
-    "first_name": "James",
+    "name": "James",
     "last_name": "Dolan"
 },
 {
     "id": 3,
-    "first_name": "Jim",
+    "name": "Jim",
     "last_name": "Carry"
 }
 ];
