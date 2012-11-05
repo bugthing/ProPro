@@ -1,0 +1,15 @@
+
+<div class="span3">
+  <div class="well">
+    <ul class="nav nav-list">
+      <li class="nav-header">All charts</li>
+      {{#each chart in arrangedContent}}
+        {{view App.ShowChartInListView contentBinding="chart"}}
+      {{/each}}
+    </ul>
+  </div>
+</div>
+
+<div class="span9">
+  {{outlet}}
+</div>

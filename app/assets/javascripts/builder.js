@@ -1,7 +1,11 @@
-//= require handlebars
-//= require ember
-//= require ember-data
+//= require vendor/handlebars
+//= require vendor/ember
+//= require vendor/ember-data
+//= require vendor/md5
+//= require_tree ./app
 
-App = Ember.Application.create({
-    rootElement: '#builder'
-});
+App.initialize();
+
+//App.initialize({
+//    rootElement: '#builder'
+//});

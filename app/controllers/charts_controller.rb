@@ -4,26 +4,28 @@ class ChartsController < ApplicationController
   respond_to :html, :json, :xml
     
   def index
-    respond_with charts
+    respond_with charts, :except => [ :created_at, :updated_at ]
   end
 
   def show
-    respond_with chart
+    respond_with chart, :include => [ :sections ]
   end
 
   def create
     chart.save
-    respond_with chart
+    hash = { :chart => chart }
+    respond_with hash, :location => "chart/#{chart.id}"
   end
 
   def update
     chart.update_attributes(params[:chart])
-    respond_with chart
+    hash = { :chart => chart }
+    respond_with hash, :location => "chart/#{chart.id}"
   end
 
   def destroy
     chart.destroy
-    respond_with chart
+    respond_with chart, :except => [ :created_at, :updated_at ]
   end
   
   private
