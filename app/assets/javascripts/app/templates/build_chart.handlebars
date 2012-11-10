@@ -1,6 +1,14 @@
 
 {{#with content}}
     <h2>Build Chart: {{name}}</h2>
+    <ul> 
+    {{#each section in sections}} 
+        <li> 
+            {{ section.id }}
+            {{ section }}
+        </li> 
+    {{/each}}
+    </ul>
 {{/with}}
 
 <div class="form-actions">

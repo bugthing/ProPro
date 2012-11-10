@@ -1,4 +1,5 @@
 App.Router = Ember.Router.extend({
+  enableLogging: true,
   location: 'hash',
   
   root: Em.Route.extend({
@@ -68,10 +69,6 @@ App.Router = Ember.Router.extend({
         build: Em.Route.extend({
           route: 'build',
 
-          cancelBuild: function(router) {
-            router.transitionTo('charts.chart.index');
-          },
-
           connectOutlets: function(router) {
             var chartController = router.get('chartController');
             chartController.connectOutlet('buildChart', chartController.get('content'));
@@ -80,7 +77,12 @@ App.Router = Ember.Router.extend({
 
           exit: function(router) {
             router.get('buildChartController').exitBuilding();
+          },
+
+          cancelBuild: function(router) {
+            router.transitionTo('charts.chart.index');
           }
+
         }),
 
         edit: Em.Route.extend({

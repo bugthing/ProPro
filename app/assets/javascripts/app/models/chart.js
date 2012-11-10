@@ -1,14 +1,16 @@
 App.Chart = DS.Model.extend({
-  "name": DS.attr('string'),
-})
+  name: DS.attr('string')
+  , sections: DS.hasMany('App.Section')
+});
 App.Section = DS.Model.extend({
-  name: DS.attr('string'),
+  name: DS.attr('string')
+  , chart: DS.belongsTo('App.Chart')
 });
 App.SectionLine = DS.Model.extend({
-  toolId: DS.attr('string'),
+  toolId: DS.attr('string')
 });
 App.Tool = DS.Model.extend({
-  name: DS.attr('string'),
+  name: DS.attr('string')
 });
 
 App.Chart.FIXTURES = [
@@ -17,9 +19,9 @@ App.Chart.FIXTURES = [
     { "id": 3, "name": "Chart Fix Three" }
 ];
 App.Section.FIXTURES = [
-    { "id": 1, "name": "Chart Fix One"   },
-    { "id": 2, "name": "Chart Fix Two"   },
-    { "id": 3, "name": "Chart Fix Three" }
+    { "id": 1, "name": "Chart Fix One"    },
+    { "id": 2, "name": "Chart Fix Two"    },
+    { "id": 3, "name": "Chart Fix Three"  }
 ];
 App.SectionLine.FIXTURES = [
     { "id": 1, "tool_id": 1 },
@@ -31,5 +33,3 @@ App.Tool.FIXTURES = [
     { "id": 2, "name": "Text Input" },
     { "id": 3, "name": "Button Input" }
 ];
-
-

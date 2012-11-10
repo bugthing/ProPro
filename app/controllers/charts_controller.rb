@@ -1,49 +1,35 @@
 class ChartsController < ApplicationController
   before_filter(:require_login)
  
-  respond_to :html, :json, :xml
+  respond_to :html, :json
     
   def index
-    respond_with charts, :except => [ :created_at, :updated_at ]
+    @charts = Chart.all
+    render "index"
   end
 
   def show
-    respond_with chart, :include => [ :sections ]
+    @chart = Chart.find(params[:id])
+    render "show"
   end
 
   def create
-    chart.save
-    hash = { :chart => chart }
-    respond_with hash, :location => "chart/#{chart.id}"
+    @chart = Chart.new(params[:chart])
+    @chart.save
+    render "show"
   end
 
   def update
-    chart.update_attributes(params[:chart])
-    hash = { :chart => chart }
-    respond_with hash, :location => "chart/#{chart.id}"
+    @chart = Chart.find(params[:id])
+    @chart.update_attributes(params[:chart])
+    @chart.save
+    render "show"
   end
 
   def destroy
-    chart.destroy
-    respond_with chart, :except => [ :created_at, :updated_at ]
+    @chart = Chart.find(params[:id])
+    @chart.destroy
+    render json: nil, status: :ok
   end
   
-  private
-  
-  # Make these helpers available to the view too
-  helper_method :chart, :charts
-  
-  def chart
-    # If the action is new or create...
-    @chart ||= if params[:action] =~ /new|create/
-      Chart.new(params[:chart])
-    else
-      Chart.find(params[:id])
-    end
-  end
-
-  def charts
-    @charts = Chart.all
-  end
-
 end
