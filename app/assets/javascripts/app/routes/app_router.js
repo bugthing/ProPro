@@ -56,6 +56,10 @@ App.Router = Ember.Router.extend({
             router.transitionTo('charts.chart.edit');
           },
 
+          showBuild: function(router) {
+            router.transitionTo('charts.chart.build.index');
+          },
+
           connectOutlets: function(router, context) {
             router.get('chartController').connectOutlet('showChart');
           }
@@ -71,7 +75,6 @@ App.Router = Ember.Router.extend({
           connectOutlets: function(router) {
             var chartController = router.get('chartController');
             chartController.connectOutlet('editChart', chartController.get('content'));
-            //router.get('applicationController').connectOutlet('editChart', chartController.get('content'));
             router.get('editChartController').enterEditing();
           },
 
@@ -79,25 +82,27 @@ App.Router = Ember.Router.extend({
             router.get('editChartController').exitEditing();
           }
         }),
-        //build: Em.Route.extend({
-        //  route: 'build',
+        build: Em.Route.extend({
+          route: 'build',
 
-        //  connectOutlets: function(router, context) {
-        //    router.get('chartsController').connectOutlet('chart', context);
-        //  },
+          connectOutlets: function(router, context) {
+            var chartController = router.get('chartController');
+            chartController.connectOutlet('buildChart', chartController.get('content'));
+            router.get('applicationController').connectOutlet('buildChart', chartController.get('content'));
+          },
 
-        //  index: Em.Route.extend({
-        //    route: '/',
+          index: Em.Route.extend({
+            route: '/',
 
-        //    showEdit: function(router) {
-        //      router.transitionTo('charts.chart.edit');
-        //    },
+            cancelBuild: function(router) {
+              router.transitionTo('charts.index');
+            },
 
-        //    connectOutlets: function(router, context) {
-        //      router.get('chartController').connectOutlet('showChart');
-        //    }
-        //  }),
-        //})
+            connectOutlets: function(router, context) {
+              router.get('chartController').connectOutlet('showChart');
+            }
+          }),
+        })
       })
     })
   })

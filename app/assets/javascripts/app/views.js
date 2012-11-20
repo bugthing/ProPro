@@ -1,25 +1,16 @@
 App.ApplicationView = Em.View.extend({
   templateName: 'app/templates/application'
 });
+
 App.ChartsView = Em.View.extend({
   templateName: 'app/templates/charts'
-});App.ChartView = Em.View.extend({
+});
+
+App.ChartView = Em.View.extend({
   templateName: 'app/templates/chart'
-});App.EditChartView = Ember.View.extend({
-  templateName: 'app/templates/edit_chart',
-  tagName: 'form',
-  classNames: 'form-horizontal',
+});
 
-  didInsertElement: function() {
-    this._super();
-    this.$('input:first').focus();
-  },
-
-  submit: function(event) {
-    event.preventDefault();
-    this.get('controller').updateRecord();
-  }
-});App.ShowChartInListView = Em.View.extend({
+App.ShowChartInListView = Em.View.extend({
   templateName: 'app/templates/show_chart_in_list',
   tagName: 'li',
   classNameBindings: 'isActive:active',
@@ -36,7 +27,33 @@ App.ChartsView = Em.View.extend({
     }
   }.property('App.router.currentState', 'App.router.chartController.content')
 });
+
 App.ShowChartView = Em.View.extend({
   templateName: 'app/templates/show_chart',
   classNames: 'chart-details'
+});
+
+App.EditChartView = Ember.View.extend({
+  templateName: 'app/templates/edit_chart',
+  tagName: 'form',
+  classNames: 'form-horizontal',
+
+  didInsertElement: function() {
+    this._super();
+    this.$('input:first').focus();
+  },
+
+  submit: function(event) {
+    event.preventDefault();
+    this.get('controller').updateRecord();
+  }
+});
+
+App.BuildChartView = Ember.View.extend({
+  templateName: 'app/templates/build_chart',
+
+  didInsertElement: function() {
+    this._super();
+  }
+
 });
