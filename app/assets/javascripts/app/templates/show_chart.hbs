@@ -1,10 +1,9 @@
-
 {{#with content}}
   <h2>{{name}}</h2>
+  <p> Perhaps some stats and info regarding the chart </p>
 {{/with}}
 
 <div class="well well-small">
   <a class="btn" {{action showEdit}}>Edit</a>
-  <a class="btn" {{action showBuild}}>Build</a>
   <a class="btn btn-danger" {{action destroyRecord target="controller"}}>Remove</a>
 </div>

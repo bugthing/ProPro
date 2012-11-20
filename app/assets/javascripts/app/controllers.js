@@ -1,3 +1,15 @@
+App.ApplicationController = Em.Controller.extend({
+});
+App.ChartController = Em.Controller.extend({
+  destroyRecord: function() {
+    this.get('content').deleteRecord();
+    this.get('store').commit();
+    App.router.transitionTo('charts.index');
+  }
+});
+App.ChartsController = Em.ArrayController.extend({
+  sortProperties: ['name']
+});
 App.EditChartController = Em.Controller.extend({
   content: null,
 

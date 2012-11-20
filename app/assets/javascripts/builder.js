@@ -5,7 +5,3 @@
 //= require_tree ./app
 
 App.initialize();
-
-//App.initialize({
-//    rootElement: '#builder'
-//});

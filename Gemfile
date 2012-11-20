@@ -20,6 +20,7 @@ group :assets do
   gem 'less-rails-bootstrap'
 
   gem 'uglifier', '>= 1.0.3'
+  gem 'jquery-ui-rails'
 end
 group :test do
   gem 'shoulda'

@@ -1,0 +1,134 @@
+<% content_for :custom_head_tag do %>
+  <%= javascript_include_tag "jquery.ui.all" %>
+  <%= javascript_include_tag "vendor/jquery.jsPlumb-1.3.16-all.js" %>
+  <%= javascript_include_tag "builder" %>
+<% end %>
+
+<div id="builder" style="display: none;" class=span12></div>
+
+<div class="span2">
+  <div class="well" id="section-builder">
+    <h2> Sections </h2>
+    <i> 
+      Use the chart builder on the right to 
+      add sections the edit them in this area
+    </i>
+  </div>
+</div>
+
+<div class="span10 well" id="chart-builder">
+
+  <h1> <%= @chart.name %> </h1>
+
+    <% 
+      @chart.sections.each_with_index do |section, i| 
+    %>
+
+      <div id="section-<%=section.id%>" class='chart-section' >
+        <div class="dropdown clearfix">
+           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block; position: static; margin-bottom: 5px; *width: 180px;">
+             <li class="dropdown-submenu">
+               <a tabindex="-1" href="#">
+                   <%= section.name %>(<%= section.id %>)
+               </a>
+               <ul class="dropdown-menu">
+                   <li> <a href='javascript: doSectionEdit( <%= section.id %> )' > Edit </a> </li>
+                   <li> <a href='javascript: doSectionDel( <%= section.id %> )' > Del  </a> </li>
+                   <li> <a href='javascript: doSectionOnward( <%= section.id %> )' > Onward  </a> </li>
+               </ul>
+             </li>
+           </ul>
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>
+
+<script language='javascript'>
+
+  jQuery().ready(function(){ 
+    buildFlowChart();
+  });
+
+  function buildFlowChart() {
+
+    //var edges = this.get('edges').content;
+    var edges = [ 
+    //    { 'label': 'Edge 1', 'fromSectionId': 565204389, 'toSectionId': 169236791 },
+    //    { 'label': 'Edge 2', 'fromSectionId': 169236791, 'toSectionId': 294829972 } 
+    ];
+
+    jsPlumb.Defaults.Connector = [ "Flowchart" ];
+    var connectorPaintStyle = { lineWidth:3, strokeStyle: "#346789" };
+
+    if ( typeof(edges) == 'undefined' ) return;
+
+    // Build connector attributes
+    var targetOption = { 
+        maxConnections:-1,
+        endpoint:["Dot", {radius:5}],
+        paintStyle:{fillStyle:"#FFEF00"},
+        setDragAllowedWhenFull:true,
+        anchor:"TopCenter",
+        isSource:false,
+        isTarget:true
+    };
+    // .. deep copy/clone the object and alter a few bits..
+    var sourceOption = jQuery.extend(true, {}, targetOption);
+    sourceOption.isSource = true;
+    sourceOption.isTarget = false;
+    sourceOption.anchor   = "BottomCenter";
+
+    for( var i=0; i < edges.length; i++ ) {
+      var edge = edges[i];
+
+      var overlays = [
+          [ "Arrow", { location:0.5 } ],
+          [ "Label", { location:0.8, label: edge.label, cssClass: "edge-label" } ]
+      ];
+
+      fromID = 'section-' + edge.fromSectionId;
+      toID   = 'section-' + edge.toSectionId;
+
+      source_ep = jsPlumb.addEndpoint(fromID, sourceOption);
+      target_ep = jsPlumb.addEndpoint(toID, targetOption);
+      //jsPlumb.draggable(fromID); 
+      jsPlumb.draggable(toID);
+      jsPlumb.connect({ source: source_ep, target: target_ep, overlays:overlays });
+    }
+  }
+
+  function doSectionDel( sectionId ) { 
+  }
+
+  function doSectionOnward( sectionId ) { 
+    jQuery('#section-builder').html('<h2>' + sectionId + '</h2>');
+  }
+
+  function doSectionEdit( sectionId ) { 
+    jQuery('#section-builder').html('<div id="section-builder-title"></div><div id="section-builder-lines"></div>');
+    // set section details from server..
+    section = App.SectionModel.create({ id: sectionId });
+    section..addObserver('name', function(){
+      jQuery('#section-builder-title').html('<h2>' + section.name + '</h2>');
+        for( var i in section.sectionLines ) {
+        sectionLineId =  section.sectionLines[i];
+        doSectionLineEdit( sectionLineId );
+      }
+    });
+  }
+  function doSectionLineEdit( sectionLineId ) { 
+    sectionLineIdName = 'sectionLine-' + sectionLineId
+    // create div to fill with section line..
+    if ( jQuery('#' + sectionLineIdName).length == 0 ) {
+      jQuery('#section-builder-lines').append('<div id="'+sectionLineIdName+'"></div>');
+    }
+    App.SectionLineModel.load(sectionLineId, function( sectionLine ){
+      jQuery('#' + sectionLineIdName).html('<b> section line </b>');
+    });
+  }
+
+
+</script>

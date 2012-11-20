@@ -1,0 +1,132 @@
+<% content_for :custom_head_tag do %>
+  <%= javascript_include_tag "jquery.ui.all" %>
+  <%= javascript_include_tag "vendor/jquery.jsPlumb-1.3.16-all.js" %>
+<% end %>
+
+<div class="span2 well">
+    <div class="node" id="block1" style="position: absolute;">Block1</div>
+    <div class="node" id="block2" style="position: absolute;">Block2</div>
+</div>
+
+<div class="span10 well" id="chart-builder">
+
+    <h1> <%= @chart.name %> </h1>
+
+    <%
+      height = 200;
+      width  = 200;
+      @chart.sections.each do |section|
+        height += 20;
+        width  += 20;
+    %>
+
+      <div id="section-<%=section.id%>" class='chart-section' style="top: <%=height%>px; left: <%=width%>px;">
+        <%= section.name %>
+        (<%= section.id %>)
+      </div>
+
+    <% end %>
+
+
+</div>
+
+<!--
+<script language='javascript'>
+
+  jQuery().ready(function(){ 
+    buildFlowChart();
+  });
+
+  function buildFlowChart() {
+
+    //var edges = this.get('edges').content;
+    var edges = [ 
+        { 'label': 'Edge 1', 'fromSectionId': 565204389, 'toSectionId': 169236791 },
+        { 'label': 'Edge 2', 'fromSectionId': 169236791, 'toSectionId': 294829972 } 
+    ];
+
+    jsPlumb.Defaults.Connector = [ "Flowchart" ];
+    var connectorPaintStyle = { lineWidth:3, strokeStyle: "#346789" };
+
+    if ( typeof(edges) == 'undefined' ) return;
+
+    for( var i=0; i < edges.length; i++ ) {
+      var edge = edges[i];
+
+      var overlays = [
+          [ "Arrow", { location:0.5 } ],
+          [ "Label", { location:0.8, label: edge.label, cssClass: "edge-label" } ]
+      ];
+
+      if ( ! jQuery('#section-' + edge.fromSectionId).length ) {
+          alert('cannot find:' + edge.fromSectionId + '. Is it in the DOM?');
+          break;
+      }
+      var source_ep = jsPlumb.addEndpoint(
+          'section-' + edge.fromSectionId,
+          {
+              anchor:[ "BottomCenter" ],
+              endpointsOnTop: true,
+              maxConnections: -1,
+              isSource: true,
+              isTarget: false,
+              connectorStyle: connectorPaintStyle
+          }
+      );
+      var target_ep = jsPlumb.addEndpoint(
+          'section-' + edge.toSectionId,
+          {
+              anchor:[ "TopCenter" ],
+              endpointsOnTop: true,
+              maxConnections: -1,
+              isSource: false,
+              isTarget: true,
+          }
+      );
+      var connection = jsPlumb.connect({ source: source_ep, target: target_ep, overlays:overlays});
+      jsPlumb.draggable('section-' + edge.fromSectionId);
+      jsPlumb.draggable('section-' + edge.toSectionId);
+    }
+  }
+</script>
+-->
+
+                <script type="text/javascript">
+               
+                var targetOption = { anchor:"TopCenter",
+                                                   maxConnections:-1,
+                                                    isSource:false,
+                                                    isTarget:true,
+                                                    endpoint:["Dot", {radius:5}],
+                                                    paintStyle:{fillStyle:"#66FF00"},
+                                                        setDragAllowedWhenFull:true}
+                                                       
+                var sourceOption = {anchor:"BottomCenter",
+                                                        maxConnections:-1,
+                                                    isSource:true,
+                                                    isTarget:false,
+                                                    endpoint:["Dot", {radius:5}],
+                                                    paintStyle:{fillStyle:"#FFEF00"},
+                                                        setDragAllowedWhenFull:true}
+               
+                jsPlumb.bind("ready", function() {
+                       
+                        jsPlumb.addEndpoint('section-169236791', targetOption);
+                        source_ep = jsPlumb.addEndpoint('section-169236791', sourceOption);
+                       
+                        target_ep = jsPlumb.addEndpoint('section-294829972', targetOption);
+                        jsPlumb.addEndpoint('section-294829972', sourceOption);
+                       
+                        jsPlumb.draggable('section-169236791');
+                        jsPlumb.draggable('section-294829972');
+
+                        var overlays = [
+                            [ "Arrow", { location:0.5 } ],
+                            [ "Label", { location:0.8, label: 'Test Edge', cssClass: "edge-label" } ]
+                        ];
+
+                        jsPlumb.connect({ source: source_ep, target: target_ep, overlays:overlays});
+                });
+               
+                </script>
+

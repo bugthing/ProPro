@@ -4,6 +4,10 @@ class BuilderController < ApplicationController
   def index
   end
 
+  def show
+    @chart = Chart.find(params[:id])
+  end
+
   #def charts
   #  @charts = Chart.all
   #end

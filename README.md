@@ -20,3 +20,10 @@ ToDo
 *  User sign up
 *  API Access control (token based)
 
+
+Credits
+=======
+
+[BootStrap](http://twitter.github.com)
+[Rails](http://guides.rubyonrails.org)
+[JSPlumb](http://www.jsplumb.org)

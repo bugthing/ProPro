@@ -15,8 +15,13 @@ class ChartsController < ApplicationController
 
   def create
     @chart = Chart.new(params[:chart])
+
+    # TBA - test required!
+    # set the user group against the newly defined chart.
+    @chart.user_group = @current_user.user_group
+
     @chart.save
-    render "show"
+    render "show", status: :created
   end
 
   def update
