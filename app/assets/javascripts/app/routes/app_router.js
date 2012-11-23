@@ -87,7 +87,7 @@ App.Router = Ember.Router.extend({
 
           connectOutlets: function(router, context) {
             var chartController = router.get('chartController');
-            chartController.connectOutlet('buildChart', chartController.get('content'));
+            //chartController.connectOutlet('buildChart', chartController.get('content'));
             router.get('applicationController').connectOutlet('buildChart', chartController.get('content'));
           },
 
@@ -99,7 +99,6 @@ App.Router = Ember.Router.extend({
             },
 
             connectOutlets: function(router, context) {
-              router.get('chartController').connectOutlet('showChart');
             }
           }),
         })

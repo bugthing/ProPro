@@ -6,33 +6,5 @@
 
 <div class="span12">
   <div id='builder' class="well">
-
-
-    <!--
-    <table class="table">
-      <thead>
-        <tr>
-          <th> Chart Name </th>
-          <th> </th>
-        </tr>
-      </thead>
-      <tbody>
-    <%
-      @current_user.user_group.charts.each do |chart| 
-    %>
-        <tr>
-          <td> <%= chart.name %> </td>
-          <td> 
-            <%= button_to "Build", {:controller => "builder", :action => "show", :id => chart.id}, { class:"btn" } %>
-          </td>
-        </tr>
-    <%
-      end
-    %>
-      </tbody>
-    </table>
-    -->
-
   </div>
 </div>
-

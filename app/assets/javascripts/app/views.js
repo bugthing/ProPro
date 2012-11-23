@@ -51,9 +51,15 @@ App.EditChartView = Ember.View.extend({
 
 App.BuildChartView = Ember.View.extend({
   templateName: 'app/templates/build_chart',
-
   didInsertElement: function() {
-    this._super();
-  }
-
+    // lets redirect to the oldskool way of doing a web UI here..
+    if ( ! this.get('isTouchDevice') ) {
+      var href = '/builder/' + this.get('controller').get('content.id');
+      window.location.href = href;
+    }
+  },
+  isTouchDevice: function() {
+    return !!('ontouchstart' in window)     // works on most browsers 
+      || !!('onmsgesturechange' in window); // works on ie10
+  }.property()
 });

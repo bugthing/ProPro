@@ -1,12 +1,11 @@
 <% content_for :custom_head_tag do %>
   <%= javascript_include_tag "jquery.ui.all" %>
   <%= javascript_include_tag "vendor/jquery.jsPlumb-1.3.16-all.js" %>
-  <%= javascript_include_tag "builder" %>
 <% end %>
 
 <div id="builder" style="display: none;" class=span12></div>
 
-<div class="span2">
+<div class="span3">
   <div class="well" id="section-builder">
     <h2> Sections </h2>
     <i> 
@@ -16,7 +15,7 @@
   </div>
 </div>
 
-<div class="span10 well" id="chart-builder">
+<div class="span8 well" id="chart-builder">
 
   <h1> <%= @chart.name %> </h1>
 
@@ -43,7 +42,6 @@
 
     <% end %>
 
-  </div>
 </div>
 
 <script language='javascript'>
@@ -110,14 +108,13 @@
   function doSectionEdit( sectionId ) { 
     jQuery('#section-builder').html('<div id="section-builder-title"></div><div id="section-builder-lines"></div>');
     // set section details from server..
-    section = App.SectionModel.create({ id: sectionId });
-    section..addObserver('name', function(){
-      jQuery('#section-builder-title').html('<h2>' + section.name + '</h2>');
-        for( var i in section.sectionLines ) {
-        sectionLineId =  section.sectionLines[i];
-        doSectionLineEdit( sectionLineId );
-      }
-    });
+    //function(){
+    //  jQuery('#section-builder-title').html('<h2>' + section.name + '</h2>');
+    //    for( var i in section.sectionLines ) {
+    //    sectionLineId =  section.sectionLines[i];
+    //    doSectionLineEdit( sectionLineId );
+    //  }
+    //});
   }
   function doSectionLineEdit( sectionLineId ) { 
     sectionLineIdName = 'sectionLine-' + sectionLineId
