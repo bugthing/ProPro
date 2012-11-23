@@ -1,13 +1,12 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 tool_one:
-  name: Tool One
+  name: Plain Text
   user_group: user_group_one
 
 tool_two:
-  name: Tool Two
+  name: Input Box
   user_group: user_group_one
 
 tool_three:
-  name: Tool Three
+  name: Next Button
   user_group: user_group_one
