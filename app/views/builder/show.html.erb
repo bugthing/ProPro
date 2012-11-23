@@ -28,7 +28,7 @@
            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block; position: static; margin-bottom: 5px; *width: 180px;">
              <li class="dropdown-submenu">
                <a tabindex="-1" href="#">
-                   <%= section.name %>(<%= section.id %>)
+                 <%= section.name %>(<%= section.id %>)
                </a>
                <ul class="dropdown-menu">
                    <li> <a href='javascript: doSectionEdit( <%= section.id %> )' > Edit </a> </li>
@@ -47,16 +47,10 @@
 <script language='javascript'>
 
   jQuery().ready(function(){ 
-    buildFlowChart();
+    buildFlowChart( <%= @chart.sections_connections.to_json %>);
   });
 
-  function buildFlowChart() {
-
-    //var edges = this.get('edges').content;
-    var edges = [ 
-    //    { 'label': 'Edge 1', 'fromSectionId': 565204389, 'toSectionId': 169236791 },
-    //    { 'label': 'Edge 2', 'fromSectionId': 169236791, 'toSectionId': 294829972 } 
-    ];
+  function buildFlowChart( edges ) {
 
     jsPlumb.Defaults.Connector = [ "Flowchart" ];
     var connectorPaintStyle = { lineWidth:3, strokeStyle: "#346789" };
@@ -84,11 +78,11 @@
 
       var overlays = [
           [ "Arrow", { location:0.5 } ],
-          [ "Label", { location:0.8, label: edge.label, cssClass: "edge-label" } ]
+          [ "Label", { location:0.8, label: "EDGE", cssClass: "edge-label" } ]
       ];
 
-      fromID = 'section-' + edge.fromSectionId;
-      toID   = 'section-' + edge.toSectionId;
+      fromID = 'section-' + edge[0];
+      toID   = 'section-' + edge[1];
 
       source_ep = jsPlumb.addEndpoint(fromID, sourceOption);
       target_ep = jsPlumb.addEndpoint(toID, targetOption);

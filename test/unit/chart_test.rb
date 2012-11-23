@@ -40,6 +40,10 @@ class ChartTest < ActiveSupport::TestCase
     #puts "User User Group: #{u.user_group}"
     assert u
 
+    # check we have the method.. when I know what it is actually supposed to do, add stricter test..
+    sc = c.sections_connections
+    assert sc
+
   end
 
 end
