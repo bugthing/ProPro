@@ -4,24 +4,22 @@ class ChartsControllerTest < ActionController::TestCase
   fixtures :all
 
   context 'deny access to restful api' do
-    setup do
-      get :index,  {format: :json}
-    end
+    setup { get :index }
     should respond_with(:redirect)
   end
 
   context 'logged in' do
     setup do
-      session[:user_id] = User.find_by_email('dave@people.com').id
+      log_dave_in_via_session
     end
 
     context 'restful api (get)' do
-      setup { get :index,  format: :json }
+      setup { get :index }
       should respond_with(:success)
     end
 
     context 'restful api (post)' do
-      setup { post :create, chart: { name: 'Test Chart Three'}, format: :json }
+      setup { post :create, chart: { name: 'Test Chart Three'} }
       should respond_with(:created)
     end
   end

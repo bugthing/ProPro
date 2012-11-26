@@ -26,17 +26,17 @@
       <div id="section-<%=section.id%>" class='chart-section' >
         <div class="dropdown clearfix">
            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block; position: static; margin-bottom: 5px; *width: 180px;">
-             <li class="dropdown-submenu">
-               <a tabindex="-1" href="#">
-                 <%= section.name %>(<%= section.id %>)
-               </a>
-               <ul class="dropdown-menu">
-                   <li> <a href='javascript: doSectionEdit( <%= section.id %> )' > Edit </a> </li>
-                   <li> <a href='javascript: doSectionDel( <%= section.id %> )' > Del  </a> </li>
-                   <li> <a href='javascript: doSectionOnward( <%= section.id %> )' > Onward  </a> </li>
-               </ul>
+             <li> <%= section.name %>(<%= section.id %>) </li>
+             <li class="">
              </li>
            </ul>
+           <div>
+                <a  href='javascript: doSectionEdit( <%= section.id %> )'   style=""> Edit    </a> 
+            |
+                <a  href='javascript: doSectionDel( <%= section.id %> )'    style=""> Del     </a> 
+            |
+                <a  href='javascript: doSectionOnward( <%= section.id %> )' style=""> Onward  </a> 
+          </div>
         </div>
       </div>
 
@@ -100,24 +100,31 @@
   }
 
   function doSectionEdit( sectionId ) { 
-    jQuery('#section-builder').html('<div id="section-builder-title"></div><div id="section-builder-lines"></div>');
-    // set section details from server..
-    //function(){
-    //  jQuery('#section-builder-title').html('<h2>' + section.name + '</h2>');
-    //    for( var i in section.sectionLines ) {
-    //    sectionLineId =  section.sectionLines[i];
-    //    doSectionLineEdit( sectionLineId );
-    //  }
-    //});
+
+    jQuery('#section-builder').html('<div id="section-builder-title"></div><div id="section-builder-lines">loading...</div>');
+
+    jQuery.ajax({
+      url: '/sections/' + sectionId,
+      dataType: 'json',
+      success: function(json){
+        var section = json.section
+        jQuery('#section-builder-title').html('<h2>' + section.name + '</h2>');
+        jQuery('#section-builder-lines').html('');
+          for( var i in section.section_lines ) {
+          sectionLineId =  section.section_lines[i];
+          doSectionLineEdit( sectionLineId );
+        }
+      }
+    });
   }
   function doSectionLineEdit( sectionLineId ) { 
-    sectionLineIdName = 'sectionLine-' + sectionLineId
-    // create div to fill with section line..
-    if ( jQuery('#' + sectionLineIdName).length == 0 ) {
-      jQuery('#section-builder-lines').append('<div id="'+sectionLineIdName+'"></div>');
-    }
-    App.SectionLineModel.load(sectionLineId, function( sectionLine ){
-      jQuery('#' + sectionLineIdName).html('<b> section line </b>');
+    jQuery.ajax({
+      url: '/section_lines/' + sectionLineId,
+      dataType: 'json',
+      success: function(json){
+        var sectionLine = json.section_line
+        jQuery('#section-builder-lines').append('<h2>' + sectionLine.id + '</h2>');
+      }
     });
   }
 
