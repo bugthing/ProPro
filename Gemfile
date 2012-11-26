@@ -24,6 +24,7 @@ group :assets do
 end
 group :test do
   gem 'shoulda'
+  gem "mocha", :require => false
 end
 
 gem 'jquery-rails'

@@ -1,2 +1,2 @@
 object @section_line
-attributes :id, :tool, :section
+attributes :id, :tool, :edit_html

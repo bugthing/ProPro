@@ -47,6 +47,8 @@
 <script language='javascript'>
 
   jQuery().ready(function(){ 
+    App = {};
+    App.chartId = '<%= @chart.id %>';
     buildFlowChart( <%= @chart.sections_connections.to_json %>);
   });
 
@@ -101,7 +103,9 @@
 
   function doSectionEdit( sectionId ) { 
 
-    jQuery('#section-builder').html('<div id="section-builder-title"></div><div id="section-builder-lines">loading...</div>');
+    jQuery('#section-builder').html('<div id="section-builder-title"></div>'
+      + '<div class="accordion" id="section-builder-lines"> loading... </div>'
+    );
 
     jQuery.ajax({
       url: '/sections/' + sectionId,
@@ -123,10 +127,23 @@
       dataType: 'json',
       success: function(json){
         var sectionLine = json.section_line
-        jQuery('#section-builder-lines').append('<h2>' + sectionLine.id + '</h2>');
+        var slColId = 'sectionLineCollapse' + sectionLine.id
+        jQuery('#section-builder-lines').append(
+          '<div class="accordion-group">'
+          + '  <div class="accordion-heading">'
+          + '    <a class="accordion-toggle" data-toggle="collapse" data-parent="#section-builder-lines" href="#' + slColId + '">'
+          + 'Section Line ' + sectionLine.id
+          + '    </a>'
+          + '  </div>'
+          + '  <div id="' + slColId + '" class="accordion-body collapse">'
+          + '    <div class="accordion-inner">'
+          + sectionLine.edit_html
+          + '    </div>'
+          + '  </div>'
+          + '</div>'
+        );
       }
     });
   }
-
 
 </script>

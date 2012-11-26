@@ -1,10 +1,5 @@
 
 require 'pro_pro'
-require 'pro_pro/tool'
-
-# TBA: is there a nicer way to do this dynamic loading of tools?
-dir = "#{File.dirname(__FILE__)}/../../lib/pro_pro/tool/*.rb"
-Dir[ dir ].each { |f| require(f) }
 
 class SectionLine < ActiveRecord::Base
   belongs_to :tool
@@ -19,6 +14,10 @@ class SectionLine < ActiveRecord::Base
     section_line_tool.onward_sections
   end
 
+  def edit_html
+    section_line_tool.edit_html
+  end
+
 end
 
 class SectionLineTool
@@ -30,6 +29,9 @@ class SectionLineTool
 
   def onward_sections 
     @pro_tool.onward_sections
+  end
+  def edit_html
+    @pro_tool.edit_html
   end
 
   # get the tool class

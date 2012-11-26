@@ -12,4 +12,7 @@ class ActiveSupport::TestCase
     session[:user_id] = User.find_by_email('dave@people.com').id
   end
 
+  # mocha - unusal setup but that whats in the docs (https://github.com/freerange/mocha)
+  require "mocha/setup"
 end
+
