@@ -22,6 +22,29 @@ class SectionLinesControllerTest < ActionController::TestCase
       end
     end
 
+    context "a POST request" do
+      setup do
+        @section = Section.all.first
+        @tool = Tool.all.first
+        post :create, chart_id:@section.chart.id, section_id:@section.id, tool_id:@tool.id
+      end
+
+      should "provide section line data" do
+        assert_not_nil assigns[:section_line]
+      end
+    end
+
+    context "a DELETE request" do
+      setup do
+        @section_line = SectionLine.all.first
+        delete :destroy, chart_id:@section_line.section.chart.id, section_id:@section_line.section.id, id:@section_line.id
+      end
+
+      should "provide section line data" do
+        assert_not_nil assigns[:section_line]
+      end
+    end
+
   end
 
 end

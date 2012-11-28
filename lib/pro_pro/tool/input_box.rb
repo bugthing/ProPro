@@ -20,20 +20,20 @@ end
 
 class ProPro::Tool::InputBox < ProPro::Tool
   def edit_html
-    '
-    <table class="table">
-      <thead>
-        <tr>
-          <th> InputBox </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td> <input type="text"> </td>
-        </tr>
-      </tbody>
-    </table>
-    '
+    "
+    <div>
+      <label for='#{ editor_name_for("data_name") }'> Data name </label>
+      <div class='controls'>
+        <input placeholder='Name of data' type='text' name='#{ editor_name_for("data_name") }' />
+      </div>
+    </div>
+    <div>
+      <label for='#{ editor_name_for("data_label") }'> Data label </label>
+      <div class='controls'>
+        <input placeholder='Name of data' type='text' name='#{ editor_name_for("data_label") }' />
+      </div>
+    </div>
+    "
   end
 end
 

@@ -16,6 +16,7 @@ RailsApp::Application.routes.draw do
       resources :section_lines
     end
   end
+  resources :tools
   resources :sections 
   resources :section_lines 
 

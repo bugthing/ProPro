@@ -1,12 +1,19 @@
 
+module ProPro::HtmlFormHelpers
+  def editor_name_for(base_name)
+    "#{base_name}_#{section_line.id}"
+  end
+end
+
 class ProPro::Tool
+  include ProPro::HtmlFormHelpers
+
   attr_reader :section_line
   attr_reader :ref
-
   attr_reader :onward_sections
 
-  def initialize(section_line=nil)
-    @section_line = (section_line.nil?) ? NullSectionLine.new() : section_line
+  def initialize(sl=nil)
+    @section_line = (sl.nil?) ? NullSectionLine.new() : sl
   end
 
   # The reference used for this tool
@@ -35,6 +42,7 @@ class ProPro::Tool
 
 end
 
-class NullSectionLine
+class ProPro::NullSectionLine
 end
+
 
