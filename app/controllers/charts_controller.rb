@@ -4,35 +4,30 @@ class ChartsController < ApplicationController
   respond_to :html, :json
     
   def index
-    @charts = Chart.all
+    @charts = @current_user.user_group.charts.all
     render "index"
   end
 
   def show
-    @chart = Chart.find(params[:id])
+    @chart = @current_user.user_group.charts.find(params[:id])
     render "show"
   end
 
   def create
-    @chart = Chart.new(params[:chart])
-
-    # TBA - test required!
-    # set the user group against the newly defined chart.
-    @chart.user_group = @current_user.user_group
-
+    @chart = @current_user.user_group.charts.new(params[:chart])
     @chart.save
     render "show", status: :created
   end
 
   def update
-    @chart = Chart.find(params[:id])
+    @chart = @current_user.user_group.charts.find(params[:id])
     @chart.update_attributes(params[:chart])
     @chart.save
     render "show"
   end
 
   def destroy
-    @chart = Chart.find(params[:id])
+    @chart = @current_user.user_group.charts.find(params[:id])
     @chart.destroy
     render json: nil, status: :ok
   end
