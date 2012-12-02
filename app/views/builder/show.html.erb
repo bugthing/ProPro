@@ -1,5 +1,6 @@
 <% content_for :custom_head_tag do %>
   <%= javascript_include_tag "vendor/jquery.jsPlumb-1.3.16-all.js" %>
+  <%= javascript_include_tag "charts.js" %>
 <% end %>
 
 <div id="builder" style="display: none;" class=span12></div>
@@ -29,8 +30,8 @@
              <li class="">
              </li>
            </ul>
-           <div>
-                <a  href='javascript: doSectionEdit( <%= section.id %> )'   style=""> Edit    </a> 
+           <div class="chart-section-links">
+                <%= link_to "edit", section_path( section ), :remote => true,  "data-type" => :html %>
             |
                 <a  href='javascript: doSectionDel( <%= section.id %> )'    style=""> Del     </a> 
             |
@@ -98,85 +99,6 @@
 
   function doSectionOnward( sectionId ) { 
     jQuery('#section-builder').html('<h2>' + sectionId + '</h2>');
-  }
-
-  function doSectionEdit( sectionId ) { 
-
-    // setup some divs to take section title and section lines
-    jQuery('#section-builder').html('<div id="section-builder-title"></div>'
-      + '<div class="accordion" id="section-builder-lines"> loading... </div>'
-    );
-
-    // kickoff ajax to get section detail
-    jQuery.ajax({
-      url: '/sections/' + sectionId,
-      dataType: 'json',
-      success: function(json){
-        var section = json.section
-        // setup div for tool  and fill in section name 
-        jQuery('#section-builder-title').html('<h3>' + section.name + '</h3><span id="tools"></span>');
-        // load some tools
-        doToolsLoad( sectionId );
-        // clear section line builder and loop through each section line id
-        jQuery('#section-builder-lines').html('');
-        for( var i in section.section_lines ) {
-          sectionLineId =  section.section_lines[i];
-          doSectionLineEdit( sectionLineId, sectionId );
-        }
-      }
-    });
-  }
-
-  function doToolsLoad(sectionId) { 
-    jQuery.ajax({
-      url: '/tools',
-      dataType: 'json',
-      success: function(json){
-        var tools = json.tools
-        var li_tools = '';
-        // loop building string of html list items
-        for( var i in tools ) {
-          tool = tools[i];
-          li_tools = li_tools + '<li><a href="javascript: addSectionLine('+tool.id+', '+ sectionId +') ">'+tool.name+'</a></li>';
-        }
-        // set the div with the list of tools
-        jQuery('#tools').html(
-          '<div class="btn-group">'
-          + '<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">'
-          + 'Tools'
-          + '<span class="caret"></span>'
-          + '</a>'
-          + '  <ul class="dropdown-menu">' + li_tools + '</ul>'
-          + '</div>'
-        );
-      }
-    });
-  }
-
-  function doSectionLineEdit( sectionLineId, sectionId ) { 
-    jQuery.ajax({
-      url: '/section_lines/' + sectionLineId,
-      dataType: 'json',
-      success: function(json){
-        var sectionLine = json.section_line
-        var slColId = 'sectionLineCollapse' + sectionLine.id
-        jQuery('#section-builder-lines').append(
-          '<div class="accordion-group" id="section-line-' + sectionLine.id + '">'
-          + '  <div class="accordion-heading">'
-          + '    <a href="javascript: delSectionLine('+sectionLineId+','+sectionId+')" class="pull-right">x</a>'
-          + '    <a class="accordion-toggle" data-toggle="collapse" data-parent="#section-builder-lines" href="#' + slColId + '">'
-          + 'Section Line ' + sectionLine.id
-          + '    </a>'
-          + '  </div>'
-          + '  <div id="' + slColId + '" class="accordion-body collapse">'
-          + '    <div class="accordion-inner">'
-          + sectionLine.edit_html
-          + '    </div>'
-          + '  </div>'
-          + '</div>'
-        );
-      }
-    });
   }
 
   function addSectionLine( toolId, sectionId ) {

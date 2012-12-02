@@ -10,7 +10,11 @@ class SectionsController < ApplicationController
 
   def show
     @section = Section.find(params[:id])
-    render "show"
+    @tools = Tool.all
+    respond_with do |format|
+      format.html { render "show", :layout => false }
+      format.json { render "show" }
+    end
   end
 
   def create

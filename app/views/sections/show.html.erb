@@ -1,0 +1,22 @@
+
+<h3><%= @section.name %></h3>
+
+<span id="tools">
+
+<div class="btn-group">
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> Tools <span class="caret"></span></a>
+  <ul class="dropdown-menu">
+  <% @tools.each do |tool| %>
+    <li><a href="javascript: addSectionLine('<%= tool.id %>', '<%= @section.id %>') "><%= tool.name %></a></li>
+  <% end %>
+  </ul>
+</div>
+
+</span>
+
+<div class="accordion" id="section-builder-lines"> 
+  <% @section.section_lines.each do |section_line| %>
+    <%= render :partial => "section_line", :locals => { :section_line => section_line }  %>
+  <% end %>
+</div>
+

@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class HomeControllerTest < ActionController::TestCase
+  fixtures :all
 
   test "all REST call are ok" do
     get 'index'

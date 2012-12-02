@@ -14,11 +14,23 @@ class SectionLinesControllerTest < ActionController::TestCase
       @section_line_id = SectionLine.all.first.id
     end
 
-    context "a GET request" do
-      setup { get :show, { :id => @section_line_id } }
+    context "a GET JSON request" do
+      setup { get :show, { :id => @section_line_id, :format => :json  } }
 
       should "provide section line data" do
         assert_not_nil assigns[:section_line]
+        # parse json response.
+        body = JSON.parse(response.body)
+        assert_equal body["section_line"]["id"],  @section_line_id
+      end
+    end
+
+    context "a GET HTML request" do
+      setup { get :show, { :id => @section_line_id, :format => :html } }
+
+      should "provide section data" do
+        assert_not_nil assigns[:section_line]
+        assert_tag :tag => "div"
       end
     end
 

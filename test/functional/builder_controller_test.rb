@@ -9,6 +9,15 @@ class BuilderControllerTest < ActionController::TestCase
     should "display alert message" do
       assert flash[:alert]
     end
+
+    context "with a bad session id" do
+      setup do
+        session[:user_id] = 999
+        get 'index'
+      end
+      should respond_with(:redirect)
+    end
+
   end
 
   context "when trying to use builder with user session" do

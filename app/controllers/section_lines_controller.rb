@@ -10,7 +10,10 @@ class SectionLinesController < ApplicationController
 
   def show
     @section_line = SectionLine.find(params[:id])
-    render "show"
+    respond_with do |format|
+      format.html { render "show", :layout => false }
+      format.json { render "show" }
+    end
   end
 
   def create
