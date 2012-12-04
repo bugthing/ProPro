@@ -15,8 +15,10 @@ class SectionLine < ActiveRecord::Base
   def outgoing_sections
     section_line_tool.onward_sections
   end
-
   def edit_html
+    section_line_tool.edit_html
+  end
+  def edit_data
     section_line_tool.edit_html
   end
 
@@ -34,6 +36,9 @@ class SectionLineTool
   end
   def edit_html
     @pro_tool.edit_html
+  end
+  def edit_data( data )
+    @pro_tool.edit_html( data )
   end
 
   # get the tool class

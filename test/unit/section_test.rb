@@ -9,6 +9,10 @@ class SectionTest < ActiveSupport::TestCase
 
     os = s.outgoing_sections
     assert os
+
+    ss = s.sibling_sections
+    assert_equal ["Section Three", "Section Two"], ss.map{ |s| s.name }.sort
+
   end
 
 end

@@ -12,4 +12,10 @@ class Section < ActiveRecord::Base
     arr
   end
 
+  # get all the other sections that belong to the parent chart
+  # except this one (self)
+  def sibling_sections
+    self.chart.sections - [self]
+  end
+
 end

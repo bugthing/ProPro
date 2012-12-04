@@ -4,7 +4,7 @@
 <div class="btn-group" id="tools">
   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> Tools <span class="caret"></span></a>
   <ul class="dropdown-menu">
-  <% @tools.each do |tool| %>
+  <% @section.chart.user_group.tools.each do |tool| %>
     <li>
       <%= link_to tool.name, 'javascript:;', :remote => true, :"data-tool-id" => tool.id %>
     </li>

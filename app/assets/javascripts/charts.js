@@ -7,7 +7,7 @@ jQuery(function($) {
     });
 
     // Callback for delete link on section line within section editor
-    $('#section-builder-lines a[data-method="delete"]').live('ajax:success', function(event, data, status, xhr) {
+    $('#section-builder-lines a[data-method=delete]').live('ajax:success', function(event, data, status, xhr) {
         // remove the section line elemente
         var section_line_id = $(event.target).attr('data-section-line-id');
         $('#section-line-' + section_line_id).remove();
@@ -29,7 +29,7 @@ jQuery(function($) {
     });
 
     // Callback from submission for section edit
-    $('form#section-form').live('ajax:success', function(event, data, status, xhr) {
+    $('form#section-form input[type=submit]').live('ajax:success', function(event, data, status, xhr) {
         alert('Saved Section:');
     });
 

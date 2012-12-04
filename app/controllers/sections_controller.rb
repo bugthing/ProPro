@@ -9,7 +9,6 @@ class SectionsController < ApplicationController
   end
 
   def show
-    @tools = Tool.all
     @section = Section.find(params[:id])
     respond_with do |format|
       format.html { render "show", :layout => false }
@@ -21,6 +20,23 @@ class SectionsController < ApplicationController
   end
 
   def update
+    @section = Section.find(params[:id])
+
+    # TBA- Add tests for this!
+    # process the params to pull out and submit section line
+    # data to each section line
+    @section.section_lines.each do |section|
+
+      data = {}
+
+      params.each_pairs do |fname, fdata|
+        if ( section.id == fname[/_(\d+)$/] ) then
+          data[ fname[/^(.+?)_/] ] = fdata
+        end
+      end
+
+      section.edit_data( data )
+    end
   end
 
   def destroy

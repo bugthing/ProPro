@@ -34,7 +34,6 @@ class SectionsControllerTest < ActionController::TestCase
 
       should "provide section data" do
         assert_not_nil assigns[:section]
-        assert_not_nil assigns[:tools]
         assert_tag :tag => "div", :attributes => { :id => "section-builder-lines" }
       end
     end
