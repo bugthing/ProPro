@@ -17,10 +17,13 @@ class SectionLinesController < ApplicationController
   end
 
   def create
-    section = @current_user.user_group.charts.find(params[:chart_id]).sections.find(params[:section_id])
+    section = @current_user.user_group.sections.find(params[:section_id])
     @section_line = section.section_lines.new( tool_id: params[:tool_id] )
     @section_line.save
-    render "show", status: :created
+    respond_with do |format|
+      format.html { render "show", :layout => false }
+      format.json { render "show" }
+    end
   end
 
   def update

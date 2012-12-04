@@ -9,8 +9,8 @@ class SectionsController < ApplicationController
   end
 
   def show
-    @section = Section.find(params[:id])
     @tools = Tool.all
+    @section = Section.find(params[:id])
     respond_with do |format|
       format.html { render "show", :layout => false }
       format.json { render "show" }

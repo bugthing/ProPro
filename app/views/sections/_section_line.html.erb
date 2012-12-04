@@ -1,10 +1,12 @@
+
 <div class="accordion-group" id="section-line-<%= section_line.id %>">
   <div class="accordion-heading">
-    <a href="javascript: delSectionLine('<%= section_line.id %>','<%= section_line.section.id %>')" class="pull-right">x</a>
+    <%= link_to "x", section_line, :method => :delete, :remote => true, :class => "pull-right", :"data-section-line-id" => section_line.id  %>
     <a class="accordion-toggle" data-toggle="collapse" data-parent="#section-builder-lines" href="#sectionLineCollapse<%= section_line.id %>"> 
-        Section Line <%= section_line.id %>
+      Section Line <%= section_line.id %>
     </a>
   </div>
+
   <div id="sectionLineCollapse<%= section_line.id %>" class="accordion-body collapse">
     <div class="accordion-inner"> 
         <%= raw section_line.edit_html %>

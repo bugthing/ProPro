@@ -11,11 +11,12 @@ RailsApp::Application.routes.draw do
   resources :users
   resources :sessions
 
-  resources :charts do
-    resources :sections do
-      resources :section_lines
-    end
-  end
+  #resources :charts do
+  #  resources :sections do
+  #    resources :section_lines
+  #  end
+  #end
+  resources :charts
   resources :tools
   resources :sections 
   resources :section_lines 
