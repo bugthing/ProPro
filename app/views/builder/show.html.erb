@@ -49,7 +49,7 @@
   jQuery().ready(function(){ 
     App = {};
     App.chartId = '<%= @chart.id %>';
-    buildFlowChart( <%= @chart.sections_connections.to_json %>);
+    buildFlowChart( <%= @sections_connections.to_json %>);
   });
 
   function buildFlowChart( edges ) {

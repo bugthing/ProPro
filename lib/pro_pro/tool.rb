@@ -2,7 +2,11 @@
 # To be replaced with some gem .. but what?..
 module ProPro::HtmlFormHelpers
   def editor_name_for(base_name)
-    "#{base_name}_#{section_line.id}"
+    "#{base_name}_#{adapter.section_line_ref}"
+  end
+  def editor_value_for(base_name)
+    ed  = adapter.edit_data
+    adapter.edit_data[ base_name ]
   end
 
   def generate_edit_html_form( form_cfg )
@@ -14,13 +18,14 @@ module ProPro::HtmlFormHelpers
       <div class='controls'>
         "
         if ( cfg[:type] == :text )
-            html_form += "<input placeholder='#{ cfg[:placeholder] }' type='text' name='#{ editor_name_for( name ) }' />"
+            html_form += "<input placeholder='#{ cfg[:placeholder] }' type='text' name='#{ editor_name_for( name ) }' value='#{ editor_value_for( name ) }'/>"
         elsif ( cfg[:type] == :textarea )
-            html_form += "<textarea  placeholder='#{ cfg[:placeholder] }' name='#{ editor_name_for( name ) }'></textarea>"
+            html_form += "<textarea  placeholder='#{ cfg[:placeholder] }' name='#{ editor_name_for( name ) }' value='#{ editor_value_for( name ) }'></textarea>"
         elsif ( cfg[:type] == :section_select )
             html_form += "<select name='#{ editor_name_for( name ) }'>"
+            selected_value = editor_value_for( name )
             all_other_sections.each do |section|
-                html_form += "<option value='#{section.id}'>#{section.name}</option>"
+              html_form += "<option value='#{section.id}' #{ section.id == selected_value.to_i ? 'selected' : '' }>#{section.name}</option>"
             end
             html_form += "</select>"
         end
@@ -34,26 +39,19 @@ module ProPro::HtmlFormHelpers
   end
 
   def all_other_sections
-    @section_line.section.sibling_sections
+    adapter.sibling_sections
   end
 end
 
 class ProPro::Tool
   include ProPro::HtmlFormHelpers
 
-  attr_reader :section_line
-  attr_reader :ref
+  attr_reader :adapter
   attr_reader :onward_sections
 
-  def initialize(sl)
-    @section_line = sl
-  end
-
-  # The reference used for this tool
-  # Curreny of no use.
-  #   returns: String
-  def ref
-    self.class.name.underscore.sub('pro_pro/','')
+  def initialize( apt)
+    # could validate passed in adaptor here (does it have correct api?)
+    @adapter = apt
   end
 
   # List of onward sections going out from this section_line
@@ -71,12 +69,6 @@ class ProPro::Tool
   #   returns: String
   def edit_html
     ''
-  end
-  # Process the data for editing this tool, maybe validate and store inbound 
-  # edit data, if something fails return false (TBA: think about error types here)
-  #   returns: Boolean
-  def edit_data( data )
-    return false
   end
 
 end

@@ -5,39 +5,40 @@ class TestProProTool < ActiveSupport::TestCase
 
   context "with a section line" do
     setup do
-      @section_line = stub("SectionLine")
-      @section_line.stubs(:id).returns(123)
-      @section_line.stubs(:sibling_sections).returns([])
+      @section_line_adapter = stub("ProPro::SectionAdapter")
     end
 
     context "and base class for ProPro::Tool's" do
       setup do
-        @tool = ProPro::Tool.new(@section_line)
+        @tool = ProPro::Tool.new( @section_line_adapter )
       end
 
       should "have some API to use" do
-        assert_equal 'tool', @tool.ref
         assert_equal [], @tool.onward_sections
         assert_equal false, @tool.has_onward_sections?
         assert_equal '', @tool.edit_html
-        assert_equal false, @tool.edit_data({})
       end
     end
 
     context "with a NextButton and a section line" do
       setup do
-        @section = stub("Section")
-        @section.stubs(:id).returns(234)
-        @section.stubs(:name).returns("Sibling Section")
+        @sib_section = stub("Section")
+        @sib_section.stubs(:name).returns("Sibling Section")
+        @sib_section.stubs(:id).returns(234)
 
-        @section_line.stubs(:sibling_sections).returns([@section])
-        @tool = ProPro::Tool::NextButton.new(@section_line)
+        @section_line_adapter = stub("ProPro::SectionAdapter")
+        @section_line_adapter.stubs(:section_line_ref).returns('234')
+        @section_line_adapter.stubs(:sibling_sections).returns([@sib_section])
+        @section_line_adapter.stubs(:edit_data).returns({ button_text:'Move On', onward_section_id:''})
+        @section_line_adapter.stubs(:edit_data=).returns(true)
+
+        @tool = ProPro::Tool::NextButton.new( @section_line_adapter )
       end
 
-      should "have some html that gets saved" do
-        assert_match /<input/, @tool.edit_html
-        assert_match /<option value='234'>Sibling Section/, @tool.edit_html
-        assert_equal true, @tool.edit_data({ 'button_text' => 'Move On', 'onward_section_id' => '1234' })
+      should "have some html that gets saved and read" do
+        assert_match /<option value='234' >Sibling Section/, @tool.edit_html
+        @section_line_adapter.stubs(:edit_data).returns({ button_text:'Move On', onward_section_id:'234'})
+        assert_match /<option value='234' selected>Sibling Section/, @tool.edit_html
       end
 
     end

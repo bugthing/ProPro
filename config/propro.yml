@@ -1,0 +1,14 @@
+
+development:
+  adapter: yaml
+  db_dir_path: 'db/propro_yaml_dbs'
+
+test:
+  adapter: yaml
+  db_dir_path: 'db/propro_yaml_dbs'
+
+production:
+  adapter: mongodb
+  mdb_host: 'localhost'
+  mdb_port: '27017'
+

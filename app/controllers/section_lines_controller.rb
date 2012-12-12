@@ -1,4 +1,6 @@
 class SectionLinesController < ApplicationController
+  include ProPro::ControllerMixin
+
   before_filter(:require_login)
 
   respond_to :html, :json
@@ -10,6 +12,7 @@ class SectionLinesController < ApplicationController
 
   def show
     @section_line = SectionLine.find(params[:id])
+    @section_line_tool = propro_tool( @section_line )
     respond_with do |format|
       format.html { render "show", :layout => false }
       format.json { render "show" }
@@ -20,6 +23,7 @@ class SectionLinesController < ApplicationController
     section = @current_user.user_group.sections.find(params[:section_id])
     @section_line = section.section_lines.new( tool_id: params[:tool_id] )
     @section_line.save
+    @section_line_tool = propro_tool( @section_line )
     respond_with do |format|
       format.html { render "show", :layout => false }
       format.json { render "show" }

@@ -22,6 +22,18 @@ class ChartsControllerTest < ActionController::TestCase
       setup { post :create, chart: { name: 'Test Chart Three'} }
       should respond_with(:created)
     end
+
+    context 'with a chart id' do
+      setup do
+        @chart_id = Chart.all.first.id
+        get :show, { :id => @chart_id }
+      end
+
+      should "provide section connections" do
+        assert_not_nil assigns[:chart]
+      end
+    end
+
   end
 
 end

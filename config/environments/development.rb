@@ -35,5 +35,11 @@ RailsApp::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
+  # EmberJS
   config.ember.variant = :development
+
+  # ProPro
+  config.propro.adapter = :yaml
+  config.propro.db_dir_path = 'db/propro_yaml_dbs'
+
 end

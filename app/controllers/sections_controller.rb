@@ -1,4 +1,5 @@
 class SectionsController < ApplicationController
+  include ProPro::ControllerMixin
   before_filter(:require_login)
 
   respond_to :html, :json
@@ -10,6 +11,7 @@ class SectionsController < ApplicationController
 
   def show
     @section = Section.find(params[:id])
+    @section_line_tools = section_line_tools
     respond_with do |format|
       format.html { render "show", :layout => false }
       format.json { render "show" }
@@ -24,22 +26,34 @@ class SectionsController < ApplicationController
 
     # TBA- Add tests for this!
     # process the params to pull out and submit section line
-    # data to each section line
-    @section.section_lines.each do |section|
+    # data to each propro tool (section line tool)
+    section_line_tools.each do |propro_tool|
 
+      section_line_id = propro_tool.adapter.section_line.id
       data = {}
 
-      params.each_pairs do |fname, fdata|
-        if ( section.id == fname[/_(\d+)$/] ) then
+      params.each do |fname, fdata|
+        section_line_id_from_form_input = fname[/_(\d+)$/]
+        if ( section_line_id == section_line_id_from_form_input) then
           data[ fname[/^(.+?)_/] ] = fdata
         end
       end
 
-      section.edit_data( data )
+      propro_tool.adapter.edit_data = data 
+    end
+
+    @section_line_tools = section_line_tools
+
+    respond_with do |format|
+      format.html { render "show", :layout => false }
+      format.json { render "show" }
     end
   end
 
-  def destroy
+  private
+
+  def section_line_tools
+    @section.section_lines.map { |sl| propro_tool(sl) }
   end
 
 end

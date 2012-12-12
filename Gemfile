@@ -50,3 +50,5 @@ gem 'ruby-prof'
 gem 'bcrypt-ruby', '~> 3.0.0', :require => "bcrypt"
 gem "ember-rails"
 gem "rabl"
+gem "mongodb", "~> 2.1.0"
+gem "bson_ext"

@@ -30,6 +30,7 @@ class SectionLinesControllerTest < ActionController::TestCase
 
       should "provide section data" do
         assert_not_nil assigns[:section_line]
+        #assert_not_nil assigns[:section_line_tool]
         assert_tag :tag => "div"
       end
     end

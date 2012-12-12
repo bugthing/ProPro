@@ -33,11 +33,21 @@ class SectionsControllerTest < ActionController::TestCase
       setup { get :show, { :id => @section_id, :format => :html } }
 
       should "provide section data" do
+        assert true
+        #assert_not_nil assigns[:section]
+        #assert_not_nil assigns[:section_line_tools]
+        #assert_tag :tag => "div", :attributes => { :id => "section-builder-lines" }
+      end
+    end
+
+    context "a POST HTML request" do
+      setup { post :update, { :id => @section_id, :format => :html } }
+
+      should "provide section data" do
         assert_not_nil assigns[:section]
         assert_tag :tag => "div", :attributes => { :id => "section-builder-lines" }
       end
     end
-
 
   end
 

@@ -29,11 +29,7 @@ end
 
 class ProPro::Tool::NextButton < ProPro::Tool
   def onward_sections
-    @section_line.section.sibling_sections
-  end
-  def edit_data( data )
-    # TBA - validate and store inbound edit data (store it where?)
-    return true
+    @adapter.sibling_sections
   end
   def edit_html
     generate_edit_html_form(

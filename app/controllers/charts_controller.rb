@@ -1,4 +1,5 @@
 class ChartsController < ApplicationController
+
   before_filter(:require_login)
  
   respond_to :html, :json
@@ -31,5 +32,5 @@ class ChartsController < ApplicationController
     @chart.destroy
     render json: nil, status: :ok
   end
-  
+
 end

@@ -5,10 +5,7 @@ class SectionTest < ActiveSupport::TestCase
 
   test "section one" do
     s = Section.find_by_name('Section One')
-    assert s.respond_to?(:outgoing_sections)
-
-    os = s.outgoing_sections
-    assert os
+    assert s.respond_to?(:section_lines)
 
     ss = s.sibling_sections
     assert_equal ["Section Three", "Section Two"], ss.map{ |s| s.name }.sort

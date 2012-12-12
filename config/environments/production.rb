@@ -65,9 +65,14 @@ RailsApp::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
-  #
   
-  
+  # EmberJS
   config.ember.variant = :production
-  config.handlebars.precompile = false
+
+  # ProPro 
+  config.propro.adapter = :mongodb
+  config.propro.mdb_host = 'localhost'
+  config.propro.mdb_port = '1234'
+
+
 end
