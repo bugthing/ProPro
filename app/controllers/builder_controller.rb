@@ -17,7 +17,7 @@ class BuilderController < ApplicationController
     @chart.sections.each_with_object([]) do |sec, arr|
       sec.section_lines.map { |sl|
         pt = propro_tool(sl)
-        pt.onward_sections.each { |out_sec| arr << [sec.id, out_sec.id] }
+        pt.onward_section_ids.each { |out_sec_id| arr << [sec.id, out_sec_id] }
       }
     end
   end

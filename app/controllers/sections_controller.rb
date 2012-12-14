@@ -33,9 +33,9 @@ class SectionsController < ApplicationController
       data = {}
 
       params.each do |fname, fdata|
-        section_line_id_from_form_input = fname[/_(\d+)$/]
-        if ( section_line_id == section_line_id_from_form_input) then
-          data[ fname[/^(.+?)_/] ] = fdata
+        match_data = /^(?<name>.+?)_(?<id>\d+)$/.match( fname )
+        if ( match_data && section_line_id.to_s == match_data[:id].to_s ) then
+          data[ match_data[:name].to_sym ] = fdata
         end
       end
 

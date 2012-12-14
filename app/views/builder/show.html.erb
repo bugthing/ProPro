@@ -88,7 +88,7 @@
 
       source_ep = jsPlumb.addEndpoint(fromID, sourceOption);
       target_ep = jsPlumb.addEndpoint(toID, targetOption);
-      //jsPlumb.draggable(fromID); 
+      jsPlumb.draggable(fromID); 
       jsPlumb.draggable(toID);
       jsPlumb.connect({ source: source_ep, target: target_ep, overlays:overlays });
     }

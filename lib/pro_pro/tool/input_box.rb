@@ -28,8 +28,8 @@ class ProPro::Tool::InputBox < ProPro::Tool
 end
 
 class ProPro::Tool::NextButton < ProPro::Tool
-  def onward_sections
-    @adapter.sibling_sections
+  def onward_section_ids
+    [ adapter.edit_data[ :onward_section_id ].to_i ]
   end
   def edit_html
     generate_edit_html_form(

@@ -31,11 +31,12 @@ class ProPro::SectionAdapter::Yaml < ProPro::SectionAdapter
   def initialize( section_line, db_dir_path )
     super( section_line )
     @yaml_file = File.join( db_dir_path, "section_line_#{section_line_ref}.yml" )
+    # ensure the yaml file exits..
+    self.edit_data={} unless File.exists?(@yaml_file)
   end
 
   # load data from yaml file..
   def edit_data
-    return {} unless File.exists?(@yaml_file)
     data = File.open(@yaml_file, "r") do |file|
       YAML.load(file)
     end
@@ -45,6 +46,7 @@ class ProPro::SectionAdapter::Yaml < ProPro::SectionAdapter
   def edit_data=( data )
     File.open(@yaml_file, "w") {|file| file.puts( data.to_yaml) }
   end
+
 end
 
 require 'mongo'

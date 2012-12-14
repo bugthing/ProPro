@@ -20,12 +20,12 @@ module ProPro::HtmlFormHelpers
         if ( cfg[:type] == :text )
             html_form += "<input placeholder='#{ cfg[:placeholder] }' type='text' name='#{ editor_name_for( name ) }' value='#{ editor_value_for( name ) }'/>"
         elsif ( cfg[:type] == :textarea )
-            html_form += "<textarea  placeholder='#{ cfg[:placeholder] }' name='#{ editor_name_for( name ) }' value='#{ editor_value_for( name ) }'></textarea>"
+            html_form += "<textarea  placeholder='#{ cfg[:placeholder] }' name='#{ editor_name_for( name ) }'>#{ editor_value_for( name ) }</textarea>"
         elsif ( cfg[:type] == :section_select )
             html_form += "<select name='#{ editor_name_for( name ) }'>"
             selected_value = editor_value_for( name )
             all_other_sections.each do |section|
-              html_form += "<option value='#{section.id}' #{ section.id == selected_value.to_i ? 'selected' : '' }>#{section.name}</option>"
+              html_form += "<option value='#{section.id}' #{ section.id == selected_value.to_i ? 'selected=true' : '' }>#{section.name}</option>"
             end
             html_form += "</select>"
         end
@@ -47,7 +47,7 @@ class ProPro::Tool
   include ProPro::HtmlFormHelpers
 
   attr_reader :adapter
-  attr_reader :onward_sections
+  attr_reader :onward_section_ids
 
   def initialize( apt)
     # could validate passed in adaptor here (does it have correct api?)
@@ -57,11 +57,11 @@ class ProPro::Tool
   # List of onward sections going out from this section_line
   # Intended to return an Array of Section objects
   #   returns: Array
-  def onward_sections
+  def onward_section_ids
     []
   end
   def has_onward_sections?
-    onward_sections.size < 1 ? false : true
+    onward_section_ids.size < 1 ? false : true
   end
 
   # String representing the HTML form that can be used to

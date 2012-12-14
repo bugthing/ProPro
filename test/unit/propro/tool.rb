@@ -3,7 +3,7 @@ require 'test_helper'
  
 class TestProProTool < ActiveSupport::TestCase
 
-  context "with a section line" do
+  context "with a section line adapter" do
     setup do
       @section_line_adapter = stub("ProPro::SectionAdapter")
     end

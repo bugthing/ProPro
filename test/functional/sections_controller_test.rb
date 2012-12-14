@@ -34,18 +34,38 @@ class SectionsControllerTest < ActionController::TestCase
 
       should "provide section data" do
         assert true
-        #assert_not_nil assigns[:section]
-        #assert_not_nil assigns[:section_line_tools]
-        #assert_tag :tag => "div", :attributes => { :id => "section-builder-lines" }
+        assert_not_nil assigns[:section]
+        assert_not_nil assigns[:section_line_tools]
+        assert_tag :tag => "div", :attributes => { :id => "section-builder-lines" }
       end
     end
 
     context "a POST HTML request" do
-      setup { post :update, { :id => @section_id, :format => :html } }
+      setup do
 
-      should "provide section data" do
+        # construct a hash to replicate a form submission
+        section = Section.find(@section_id)
+        form = Hash.new
+        section.section_lines.each do |sl|
+          if sl.tool.name == 'Plain Text' then
+            form["text_#{sl.id}"] = "Some plain old text"
+          elsif sl.tool.name == 'Input Box' then
+            form["data_name_#{sl.id}"] = "theNameOfData"
+            form["data_label_#{sl.id}"] = "theLabelForInput"
+          elsif sl.tool.name == 'Next Button' then
+            form["button_text_#{sl.id}"] = "The Text For Button"
+            form["onward_section_id_#{sl.id}"] = "789"
+          end
+        end
+
+        post :update, { :id => @section_id, :format => :html }.merge( form )
+      end
+
+      should "provide section form with data" do
         assert_not_nil assigns[:section]
+        assert_not_nil assigns[:section_line_tools]
         assert_tag :tag => "div", :attributes => { :id => "section-builder-lines" }
+        assert_tag :tag => "input", :attributes => { :value => "The Text For Button" }
       end
     end
 
