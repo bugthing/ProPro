@@ -19,28 +19,28 @@
 
   <h1> <%= @chart.name %> </h1>
 
-    <% 
-      @chart.sections.each_with_index do |section, i| 
-    %>
-
-      <div id="section-<%=section.id%>" class='chart-section' >
-        <div class="dropdown clearfix">
-           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block; position: static; margin-bottom: 5px; *width: 180px;">
-             <li> <%= section.name %>(<%= section.id %>) </li>
-             <li class="">
-             </li>
-           </ul>
-           <div class="chart-section-links">
-                <%= link_to "edit", section_path( section ), :remote => true,  "data-type" => :html %>
-            |
-                <a  href='javascript: doSectionDel( <%= section.id %> )'    style=""> Del     </a> 
-            |
-                <a  href='javascript: doSectionOnward( <%= section.id %> )' style=""> Onward  </a> 
-          </div>
-        </div>
-      </div>
-
+    <% @chart.sections.each_with_index do |section, i| %>
+      <%= render :partial => 'builder/chart_section', :locals => { :section => section } %>
     <% end %>
+
+  <!-- new section Modal -->
+  <div id="newsectionModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="newsectionModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="newsectionModalLabel">New Section</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_for( Section.new, :remote => true ) do |f| %>
+        <%= hidden_field_tag :chart_id, @chart.id %>
+        <%= text_field_tag :name, :html => { :placeholder => "Section name" } %>
+        <%= hidden_field_tag :from_section_id %>
+      <% end %>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <button class="btn btn-primary">Save changes</button>
+    </div>
+  </div>
 
 </div>
 

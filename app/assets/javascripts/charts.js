@@ -2,8 +2,18 @@
 jQuery(function($) {
 
     // Callback for edit link on section within chart
-    $('.chart-section-links a[data-type=html]').live('ajax:success', function(event, data, status, xhr) {
+    $(".chart-section-links a:contains('edit')").live('ajax:success', function(event, data, status, xhr) {
         $('#section-builder').html(data);
+    });
+    // Callback from click on onward link 
+    $(".chart-section-links a:contains('onward')").live('click', function(event, data, status, xhr) {
+      var onward_section_id = $(event.target).attr('data-section-id');
+      // set the id of the section to link to
+      $('#from_section_id').val(onward_section_id);
+      $('#newsectionModal').modal('show');
+      $('#newsectionModal .btn-primary').click(function(){
+        $('#newsectionModal form').submit();
+      })
     });
 
     // Callback for delete link on section line within section editor

@@ -19,6 +19,18 @@ class SectionsController < ApplicationController
   end
 
   def create
+    sec = { chart_id:params[:chart_id], name:params[:name] }
+    @section = Section.create( sec )
+
+    if ( params[:from_section_id] ) then
+      # Onward Section - add section line to link to this new section from the
+      # section with the matching id - TBA
+    end
+
+    respond_with do |format|
+      format.html { render "create", :layout => false }
+      format.json { render "create" }
+    end
   end
 
   def update

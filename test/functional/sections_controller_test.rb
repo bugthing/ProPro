@@ -40,7 +40,17 @@ class SectionsControllerTest < ActionController::TestCase
       end
     end
 
-    context "a POST HTML request" do
+    context "a POST HTML create request" do
+      setup do
+        @chart_id = Chart.all.first.id
+        post :create, { :chart_id => @chart_id, :name => 'New Section', :format => :html }
+      end
+      should "create a new section" do
+        assert_not_nil assigns[:section]
+      end
+    end
+
+    context "a POST HTML update request" do
       setup do
 
         # construct a hash to replicate a form submission
