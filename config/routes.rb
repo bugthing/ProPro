@@ -2,7 +2,8 @@ RailsApp::Application.routes.draw do
   root :to => 'home#index'
   match 'about' => 'home#about'
   match 'builder' => 'builder#index'
-  match '/builder/:id' => "builder#show"
+  match 'builder/:id' => "builder#show"
+  match 'builder/:id/connections' => "builder#connections"
 
   get "log_out" => "sessions#destroy", :as => "log_out"
   get "log_in" => "sessions#new", :as => "log_in"
@@ -16,6 +17,7 @@ RailsApp::Application.routes.draw do
   #    resources :section_lines
   #  end
   #end
+  
   resources :charts
   resources :tools
   resources :sections 

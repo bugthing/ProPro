@@ -19,9 +19,13 @@
 
   <h1> <%= @chart.name %> </h1>
 
+  <%= link_to 'draw', { :controller => 'builder', :action => 'connections' }, :remote => true, 'data-chart-id' => @chart.id, :id => 'chart-connect' %> 
+
+  <div id="chart-sections">
     <% @chart.sections.each_with_index do |section, i| %>
       <%= render :partial => 'builder/chart_section', :locals => { :section => section } %>
     <% end %>
+  </div>
 
   <!-- new section Modal -->
   <div id="newsectionModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="newsectionModalLabel" aria-hidden="true">
@@ -32,7 +36,7 @@
     <div class="modal-body">
       <%= form_for( Section.new, :remote => true ) do |f| %>
         <%= hidden_field_tag :chart_id, @chart.id %>
-        <%= text_field_tag :name, :html => { :placeholder => "Section name" } %>
+        <%= text_field_tag :name, '', :placeholder => "Section name" %>
         <%= hidden_field_tag :from_section_id %>
       <% end %>
     </div>
@@ -47,9 +51,7 @@
 <script language='javascript'>
 
   jQuery().ready(function(){ 
-    App = {};
-    App.chartId = '<%= @chart.id %>';
-    buildFlowChart( <%= @sections_connections.to_json %>);
+    $("a#chart-connect").trigger('click'); // build chart connections
   });
 
   function buildFlowChart( edges ) {
@@ -88,35 +90,27 @@
 
       source_ep = jsPlumb.addEndpoint(fromID, sourceOption);
       target_ep = jsPlumb.addEndpoint(toID, targetOption);
-      jsPlumb.draggable(fromID); 
-      jsPlumb.draggable(toID);
       jsPlumb.connect({ source: source_ep, target: target_ep, overlays:overlays });
     }
-  }
 
-  function doSectionDel( sectionId ) { 
-  }
-
-  function doSectionOnward( sectionId ) { 
-    jQuery('#section-builder').html('<h2>' + sectionId + '</h2>');
-  }
-
-  function addSectionLine( toolId, sectionId ) {
-    jQuery.post('/charts/'+App.chartId+'/sections/'+sectionId+'/section_lines', { tool_id: toolId }, function(json){
-      var sectionLine = json.section_line
-      doSectionLineEdit(sectionLine.id, sectionId);
+    // hook the action to kick off for dropping sections (save possition)
+    jsPlumb.draggable(jsPlumb.getSelector('.chart-section'), {
+      stop: function(e, ui) {
+        var dragged = ui.helper;
+        if ( ! dragged ) return ;
+        var matched = dragged.attr('id').match( /^section-([0-9]+)/ );
+        if ( matched.length > 1 ) {
+          var sectionID = matched[1];
+          var pos = dragged.position();
+          $.ajax({
+            type: 'PUT',
+            url: '/sections/' + sectionID,
+            data: { 'pos_left': pos.left, 'pos_top': pos.top }
+          });
+        }
+      }
     });
   }
-
-  function delSectionLine( sectionLineId, sectionId ) {
-    jQuery.ajax({
-        url: '/charts/'+App.chartId+'/sections/'+sectionId+'/section_lines/' + sectionLineId,
-        type: 'DELETE',
-    }).done(function( json ) {
-        jQuery('#section-line-' + sectionLineId).remove();
-    });
-  }
-
 </script>
 
 

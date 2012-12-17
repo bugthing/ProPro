@@ -1,5 +1,5 @@
 
-<div id="section-<%=section.id%>" class='chart-section' >
+<div id="section-<%=section.id%>" class='chart-section' style='left:<%= section.pos_left %>; top:<%= section.pos_top %>;'>
   <div class="dropdown clearfix">
     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block; position: static; margin-bottom: 5px; *width: 180px;">
        <li> <%= section.name %>(<%= section.id %>) </li>
@@ -7,11 +7,11 @@
        </li>
      </ul>
      <div class="chart-section-links">
-          <%= link_to "edit", section_path( section ), :remote => true %>
+        <%= link_to "edit",section_path( section ),:remote => true %>
       |
-          <a  href='javascript: doSectionDel( <%= section.id %> )'    style=""> Del     </a> 
+        <%= link_to "del", section_path( section ),:remote => true, :"data-section-id" => section.id,  :method => :delete %>
       |
-        <%= link_to "onward", 'javascript:;', :remote => true, :"data-section-id" => section.id  %>
+        <%= link_to "onward", 'javascript:;',      :remote => true, :"data-section-id" => section.id  %>
     </div>
   </div>
 </div>

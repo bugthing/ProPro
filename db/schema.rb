@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024210643) do
+ActiveRecord::Schema.define(:version => 20121217222209) do
 
   create_table "charts", :force => true do |t|
     t.string   "name"
@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(:version => 20121024210643) do
     t.integer  "chart_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "pos_left"
+    t.integer  "pos_top"
   end
 
   add_index "sections", ["chart_id"], :name => "index_sections_on_chart_id"

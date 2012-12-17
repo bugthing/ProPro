@@ -34,12 +34,23 @@ class BuilderControllerTest < ActionController::TestCase
   context 'logged in with a chart id' do
     setup do
       log_dave_in_via_session
-      get :show, { :id => Chart.all.first.id }
+      @chart_id = Chart.all.first.id
+      get :show, { :id => @chart_id }
     end
  
     should "provide section connections" do
       assert_not_nil assigns[:chart]
       assert_not_nil assigns[:sections_connections]
+    end
+
+    context 'requesting connection data' do
+      setup do
+        get :connections, { :id => @chart_id }
+      end
+  
+      should "provide section connections" do
+        assert_not_nil assigns[:sections_connections]
+      end
     end
   end
 

@@ -1,6 +1,11 @@
+
 .chart-section {
   position: relative;
   border:thin solid blue; 
   float: left;
   clear: both;
+}
+
+#chart-connect {
+  display: none;
 }

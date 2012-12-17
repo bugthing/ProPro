@@ -11,6 +11,11 @@ class BuilderController < ApplicationController
     @sections_connections = sections_connections
   end
 
+  def connections
+    @chart = Chart.find(params[:id])
+    @sections_connections = sections_connections
+  end
+
   private
 
   def sections_connections
