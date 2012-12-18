@@ -71,7 +71,8 @@ class SectionsController < ApplicationController
 
     # Here we deal with sections posstional data (if we got some)
     [:pos_left,:pos_top].each do |attr|
-      @section.send(attr.to_s+'=', params[attr]) unless ( params[attr].nil? )
+      @section.send(attr.to_s+'=', params[attr].to_i) unless ( params[attr].nil? )
+      @section.save
     end
 
     @section_line_tools = section_line_tools

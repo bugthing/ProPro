@@ -17,5 +17,3 @@
 # Ignore pre-compiled files (I think that is the right thing to do?)
 /public/assets/*
 
-# Ingore yaml dbs
-/db/propro_yaml_dbs/*.yml

@@ -1,17 +1,6 @@
 
 <h3><%= @section.name %></h3>
 
-<div class="btn-group" id="tools">
-  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> Tools <span class="caret"></span></a>
-  <ul class="dropdown-menu">
-  <% @section.chart.user_group.tools.each do |tool| %>
-    <li>
-      <%= link_to tool.name, 'javascript:;', :remote => true, :"data-tool-id" => tool.id %>
-    </li>
-  <% end %>
-  </ul>
-</div>
-
 <%= form_for SectionLine.new, :remote => true, :html => { :id => 'new-section-line-tool-form' } do |f| %>
   <%= hidden_field_tag 'tool_id', 0  %>
   <%= hidden_field_tag 'section_id', @section.id  %>
@@ -30,3 +19,13 @@
   <% end %>
 <% end %>
 
+<div class="btn-group" id="tools">
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> Tools <span class="caret"></span></a>
+  <ul class="dropdown-menu">
+  <% @section.chart.user_group.tools.each do |tool| %>
+    <li>
+      <%= link_to tool.name, 'javascript:;', :remote => true, :"data-tool-id" => tool.id %>
+    </li>
+  <% end %>
+  </ul>
+</div>

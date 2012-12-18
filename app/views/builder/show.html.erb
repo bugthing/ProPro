@@ -6,46 +6,45 @@
 <div id="builder" style="display: none;" class=span12></div>
 
 <div class="span3">
-  <div class="well" id="section-builder">
-    <h2> Sections </h2>
-    <i> 
-      Use the chart builder on the right to 
-      add sections the edit them in this area
-    </i>
+  <div class="well">
+    <h1> <%= @chart.name %> </h1>
+    <div id="section-builder">
+      <i> 
+        Use the chart builder on the right to 
+        add sections the edit them in this area
+      </i>
+    </div>
   </div>
 </div>
+<div class="span8 well" >
+  <div id="chart-builder" style='position: relative; min-height: 100%; height: 100%;'>
+    <%= link_to 'draw', { :controller => 'builder', :action => 'connections' }, :remote => true, 'data-chart-id' => @chart.id, :id => 'chart-connect' %> 
 
-<div class="span8 well" id="chart-builder">
-
-  <h1> <%= @chart.name %> </h1>
-
-  <%= link_to 'draw', { :controller => 'builder', :action => 'connections' }, :remote => true, 'data-chart-id' => @chart.id, :id => 'chart-connect' %> 
-
-  <div id="chart-sections">
-    <% @chart.sections.each_with_index do |section, i| %>
-      <%= render :partial => 'builder/chart_section', :locals => { :section => section } %>
-    <% end %>
-  </div>
-
-  <!-- new section Modal -->
-  <div id="newsectionModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="newsectionModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="newsectionModalLabel">New Section</h3>
-    </div>
-    <div class="modal-body">
-      <%= form_for( Section.new, :remote => true ) do |f| %>
-        <%= hidden_field_tag :chart_id, @chart.id %>
-        <%= text_field_tag :name, '', :placeholder => "Section name" %>
-        <%= hidden_field_tag :from_section_id %>
+    <div id="chart-sections">
+      <% @chart.sections.each_with_index do |section, i| %>
+        <%= render :partial => 'builder/chart_section', :locals => { :section => section } %>
       <% end %>
     </div>
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-      <button class="btn btn-primary">Save changes</button>
+
+    <!-- new section Modal -->
+    <div id="newsectionModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="newsectionModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="newsectionModalLabel">New Section</h3>
+      </div>
+      <div class="modal-body">
+        <%= form_for( Section.new, :remote => true ) do |f| %>
+          <%= hidden_field_tag :chart_id, @chart.id %>
+          <%= text_field_tag :name, '', :placeholder => "Section name" %>
+          <%= hidden_field_tag :from_section_id %>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary">Save changes</button>
+      </div>
     </div>
   </div>
-
 </div>
 
 <script language='javascript'>
@@ -55,45 +54,42 @@
   });
 
   function buildFlowChart( edges ) {
-
-    jsPlumb.Defaults.Connector = [ "Flowchart" ];
-    var connectorPaintStyle = { lineWidth:3, strokeStyle: "#346789" };
-
     if ( typeof(edges) == 'undefined' ) return;
 
-    // Build connector attributes
-    var targetOption = { 
-        maxConnections:-1,
+    jsPlumb.deleteEveryEndpoint();
+    jsPlumb.Defaults.Connector = [ "Flowchart" ];
+    jsPlumb.Defaults.PaintStyle = { lineWidth:6, strokeStyle:"#039DDC", outlineColor:"grey", outlineWidth:1 };
+    var defaultOption = { 
         endpoint:["Dot", {radius:5}],
-        paintStyle:{fillStyle:"#FFEF00"},
-        setDragAllowedWhenFull:true,
-        anchor:"TopCenter",
-        isSource:false,
-        isTarget:true
     };
-    // .. deep copy/clone the object and alter a few bits..
-    var sourceOption = jQuery.extend(true, {}, targetOption);
-    sourceOption.isSource = true;
-    sourceOption.isTarget = false;
-    sourceOption.anchor   = "BottomCenter";
+    var targetOption = jQuery.extend({}, defaultOption, { 
+      anchor:"TopCenter",
+      isSource:false,
+      isTarget:true
+    });
+    var sourceOption = jQuery.extend({}, defaultOption, { 
+      anchor   : "BottomCenter",
+      isSource : true,
+      isTarget : false
+    });
 
     for( var i=0; i < edges.length; i++ ) {
       var edge = edges[i];
 
       var overlays = [
           [ "Arrow", { location:0.5 } ],
-          [ "Label", { location:0.8, label: "EDGE", cssClass: "edge-label" } ]
+          [ "Label", { location:0.8, label: "", cssClass: "edge-label" } ]
       ];
 
       fromID = 'section-' + edge[0];
       toID   = 'section-' + edge[1];
-
+  
       source_ep = jsPlumb.addEndpoint(fromID, sourceOption);
       target_ep = jsPlumb.addEndpoint(toID, targetOption);
       jsPlumb.connect({ source: source_ep, target: target_ep, overlays:overlays });
     }
 
-    // hook the action to kick off for dropping sections (save possition)
+    // hookup the action to kick off when dropping sections (save possition)
     jsPlumb.draggable(jsPlumb.getSelector('.chart-section'), {
       stop: function(e, ui) {
         var dragged = ui.helper;
@@ -101,11 +97,16 @@
         var matched = dragged.attr('id').match( /^section-([0-9]+)/ );
         if ( matched.length > 1 ) {
           var sectionID = matched[1];
-          var pos = dragged.position();
+          //var pos   = dragged.position();
+          var pos_left = dragged.offset().left - $('#chart-builder').offset().left;
+          var pos_top  = dragged.offset().top  - $('#chart-builder').offset().top;
+           //pos_left = dragged.offset().left;
+           //pos_top  = dragged.offset().top ;
+           //alert( 'l:' + pos_left + ' t:' + pos_top);
           $.ajax({
             type: 'PUT',
             url: '/sections/' + sectionID,
-            data: { 'pos_left': pos.left, 'pos_top': pos.top }
+            data: { 'pos_left': pos_left, 'pos_top': pos_top }
           });
         }
       }
