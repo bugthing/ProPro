@@ -60,19 +60,26 @@ class ProPro::SectionAdapter::MongoDB < ProPro::SectionAdapter
 
   # load data from yaml file..
   def edit_data
-    obj = if mongo_coll.find_one( mongo_selector )
-    else
-      ids = mongo_coll.insert( mongo_selector )
-      obj = mongo_coll.find_one( {}, ids[0] )
-    end
+    return cleaned_mongo_obj if( mongo_obj_exists? )
+    self.edit_data = mongo_selector # creates new (empty) mongo doc
+    cleaned_mongo_obj
   end
 
   # save data in yaml file..
   def edit_data=( data )
-    mongo_obj.update( data )
+    mongo_coll.update( mongo_selector, data.merge(mongo_selector), { :upsert => true } )
   end
 
   private
+
+  def cleaned_mongo_obj
+    obj = mongo_coll.find_one( mongo_selector )
+    obj.delete_if{ |k,v| k == '_id' || k == 'section_line_ref' }
+  end
+
+  def mongo_obj_exists?
+    mongo_coll.find_one( mongo_selector ) ? true : false
+  end
 
   def mongo_coll
     db     = @mongo['propro']
@@ -81,7 +88,7 @@ class ProPro::SectionAdapter::MongoDB < ProPro::SectionAdapter
   end
 
   def mongo_selector
-    {'section_line_ref' => section_line_ref}
+    { 'section_line_ref' => section_line_ref }
   end
 
 end

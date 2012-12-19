@@ -5,7 +5,7 @@ module ProPro::HtmlFormHelpers
     "#{base_name}_#{adapter.section_line_ref}"
   end
   def editor_value_for(base_name)
-    ed  = adapter.edit_data
+    ed = adapter.edit_data
     adapter.edit_data[ base_name ]
   end
 

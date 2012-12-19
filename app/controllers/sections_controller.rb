@@ -37,7 +37,7 @@ class SectionsController < ApplicationController
       # .. get edit data..
       data = tool.adapter.edit_data
       # .. add it to data..
-      data[:onward_section_id] = @section.id
+      data['onward_section_id'] = @section.id
       # .. store data ..
       tool.adapter.edit_data = data
     end
@@ -62,7 +62,7 @@ class SectionsController < ApplicationController
       params.each do |fname, fdata|
         match_data = /^(?<name>.+?)_(?<id>\d+)$/.match( fname )
         if ( match_data && section_line_id.to_s == match_data[:id].to_s ) then
-          data[ match_data[:name].to_sym ] = fdata
+          data[ match_data[:name] ] = fdata
         end
       end
 

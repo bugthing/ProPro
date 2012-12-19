@@ -43,6 +43,25 @@ class TestProProSectionAdapter < ActiveSupport::TestCase
         assert_equal( { :some => 'data' }, @adapter.edit_data )
       end
     end
+
+    # TBA!
+    #context "and base class for ProPro::SectionAdapter::MongoDB" do
+    #  setup do
+
+    #    # Need to mock out the MongoDB stuff!
+    #    #mongo = mock('Mongo')
+    #    #mongo_client = mock('MongoClient')
+
+    #    @adapter = ProPro::SectionAdapter::MongoDB.new( @section_line )
+    #  end
+
+    #  should "be able to save data" do
+    #    assert_equal( { }, @adapter.edit_data )
+    #    assert @adapter.edit_data = { :some => 'data' }
+    #    assert_equal( { 'some' => 'data' }, @adapter.edit_data )
+    #  end
+    #end
+
   end
 
 end
