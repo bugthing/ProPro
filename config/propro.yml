@@ -9,6 +9,8 @@ test:
 
 production:
   adapter: mongodb
-  mdb_host: 'localhost'
-  mdb_port: '27017'
+  mdb_host: <%=ENV['OPENSHIFT_MONGODB_DB_HOST']%>
+  mdb_port: <%=ENV['OPENSHIFT_MONGODB_DB_PORT']%>
+  mdb_user: <%=ENV['OPENSHIFT_MONGODB_DB_USERNAME']%>
+  mdb_pass: <%=ENV['OPENSHIFT_MONGODB_DB_PASSWORD']%>
 

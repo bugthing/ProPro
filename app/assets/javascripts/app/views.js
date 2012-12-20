@@ -49,6 +49,10 @@ App.EditChartView = Ember.View.extend({
   }
 });
 
+App.ReadChartView = Ember.View.extend({
+  templateName: 'app/templates/read_chart'
+});
+
 App.BuildChartView = Ember.View.extend({
   templateName: 'app/templates/build_chart',
   didInsertElement: function() {

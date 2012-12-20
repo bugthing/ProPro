@@ -60,6 +60,10 @@ App.Router = Ember.Router.extend({
             router.transitionTo('charts.chart.build.index');
           },
 
+          showRead: function(router) {
+            router.transitionTo('charts.chart.read.index');
+          },
+
           connectOutlets: function(router, context) {
             router.get('chartController').connectOutlet('showChart');
           }
@@ -81,6 +85,21 @@ App.Router = Ember.Router.extend({
           exit: function(router) {
             router.get('editChartController').exitEditing();
           }
+        }),
+        read: Em.Route.extend({
+          route: 'read',
+          connectOutlets: function(router, context) {
+            var chartController = router.get('chartController');
+            router.get('applicationController').connectOutlet('readChart', chartController.get('content'));
+          },
+          index: Em.Route.extend({
+            route: '/',
+            cancelRead: function(router) {
+              router.transitionTo('charts.index');
+            },
+            connectOutlets: function(router, context) {
+            }
+          }),
         }),
         build: Em.Route.extend({
           route: 'build',

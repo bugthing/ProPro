@@ -27,8 +27,8 @@ group :assets do
   gem 'jquery-ui-rails'
 end
 group :test do
-  gem 'shoulda'
   gem "mocha", :require => false
+  gem 'shoulda'
 end
 
 gem 'jquery-rails'

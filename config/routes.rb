@@ -18,6 +18,7 @@ RailsApp::Application.routes.draw do
   #  end
   #end
   
+  resources :readings
   resources :charts
   resources :tools
   resources :sections 

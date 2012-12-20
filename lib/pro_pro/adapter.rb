@@ -53,9 +53,12 @@ require 'mongo'
 class ProPro::SectionAdapter::MongoDB < ProPro::SectionAdapter
   include Mongo
 
-  def initialize( section_line, host='localhost', port='27017' )
+  def initialize( section_line, host='localhost', port='27017', user=nil, pass=nil )
     super( section_line )
     @mongo = MongoClient.new(host, port)
+    if ( user && pass ) then
+      @mongo.add_auth(mongo_dbname, user, pass)
+    end
   end
 
   # load data from yaml file..
@@ -83,8 +86,12 @@ class ProPro::SectionAdapter::MongoDB < ProPro::SectionAdapter
 
   def mongo_coll
     db     = @mongo['propro']
-    coll   = db[ "section_lines"]
+    coll   = db[ mongo_dbname ]
     return coll
+  end
+
+  def mongo_dbname
+    "section_lines"
   end
 
   def mongo_selector

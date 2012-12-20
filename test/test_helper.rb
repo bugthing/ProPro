@@ -13,6 +13,6 @@ class ActiveSupport::TestCase
   end
 
   # mocha - unusal setup but that whats in the docs (https://github.com/freerange/mocha)
-  require "mocha/setup"
+  #require "mocha/setup"
 end
 

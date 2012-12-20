@@ -1,6 +1,9 @@
 require 'test_helper'
 
 class ChartTest < ActiveSupport::TestCase
+  should have_many(:sections)
+  should have_many(:readings)
+
   fixtures :all
  
   test "chart fixtures" do 

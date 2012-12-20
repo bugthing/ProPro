@@ -4,6 +4,7 @@ class Chart < ActiveRecord::Base
   belongs_to :user_group
 
   has_many :sections, :order => 'created_at'
+  has_many :readings
  
   validates :name,  :presence => true
 

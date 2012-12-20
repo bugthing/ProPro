@@ -44,7 +44,7 @@ class TestProProSectionAdapter < ActiveSupport::TestCase
       end
     end
 
-    # TBA!
+    ## TBA!
     #context "and base class for ProPro::SectionAdapter::MongoDB" do
     #  setup do
 
@@ -53,6 +53,7 @@ class TestProProSectionAdapter < ActiveSupport::TestCase
     #    #mongo_client = mock('MongoClient')
 
     #    @adapter = ProPro::SectionAdapter::MongoDB.new( @section_line )
+    #    #@adapter = ProPro::SectionAdapter::MongoDB.new( @section_line,'localhost', '27017', 'admin', 'pass')
     #  end
 
     #  should "be able to save data" do
