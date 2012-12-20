@@ -39,3 +39,4 @@ Used to build this thing
 [Rails](http://guides.rubyonrails.org)
 [jQuery](http://jquery.com)
 [JSPlumb](http://www.jsplumb.org)
+[Deploy Upon](http://openshift.redhat.com)
