@@ -52,9 +52,11 @@ end
 require 'mongo'
 class ProPro::SectionAdapter::MongoDB < ProPro::SectionAdapter
   include Mongo
+  attr_reader :mongo_dbname
 
-  def initialize( section_line, host='localhost', port='27017', user=nil, pass=nil )
+  def initialize( section_line, host='localhost', port='27017', dbname='propro', user=nil, pass=nil )
     super( section_line )
+    @mongo_dbname = dbname
     @mongo = MongoClient.new(host, port)
     if ( user && pass ) then
       @mongo.add_auth(mongo_dbname, user, pass)
@@ -88,10 +90,6 @@ class ProPro::SectionAdapter::MongoDB < ProPro::SectionAdapter
     db     = @mongo['propro']
     coll   = db[ mongo_dbname ]
     return coll
-  end
-
-  def mongo_dbname
-    "section_lines"
   end
 
   def mongo_selector

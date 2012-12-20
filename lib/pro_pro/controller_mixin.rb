@@ -20,7 +20,12 @@ module ProPro::ControllerMixin
     propro_adapter = if ( PROPRO_CONFIG['adapter'] == 'yaml' )
       ProPro::SectionAdapter::Yaml.new( section_line, PROPRO_CONFIG['db_dir_path'] )
     elsif ( PROPRO_CONFIG['adapter'] == 'mongodb' )
-      ProPro::SectionAdapter::MongoDB.new( section_line, PROPRO_CONFIG['mdb_host'], PROPRO_CONFIG['mdb_port'], PROPRO_CONFIG['mdb_user'], PROPRO_CONFIG['mdb_pass'] )
+      ProPro::SectionAdapter::MongoDB.new( section_line, 
+                                          PROPRO_CONFIG['mdb_host'], 
+                                          PROPRO_CONFIG['mdb_port'], 
+                                          PROPRO_CONFIG['mdb_dbname'], 
+                                          PROPRO_CONFIG['mdb_user'], 
+                                          PROPRO_CONFIG['mdb_pass'] )
     else
       ProPro::SectionAdapter.new( section_line )
     end
