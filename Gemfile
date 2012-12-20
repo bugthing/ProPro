@@ -29,7 +29,7 @@ end
 
 gem 'jquery-rails'
 
-gem 'libv8', '~> 3.11.8'
+#gem 'libv8', '~> 3.11.8'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
