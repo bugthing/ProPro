@@ -1,7 +1,7 @@
 
+# load yaml file.. parse it with ERB.. parse it with YAML.. set the constant..
+require 'erb'
 require 'pro_pro'
-
-# load the yaml based configuration (1 config per enviroment)
-PROPRO_CONFIG = YAML.load_file("#{Rails.root}/config/propro.yml")[Rails.env]
+PROPRO_CONFIG = YAML.load(ERB.new(File.read("#{Rails.root}/config/propro.yml" )).result)[Rails.env]
 
 
