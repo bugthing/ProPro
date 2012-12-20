@@ -84,6 +84,10 @@
       fromID = 'section-' + edge[0];
       toID   = 'section-' + edge[1];
   
+  
+      if ( ! $('#' + fromID).length > 0 ) continue;
+      if ( ! $('#' + toID).length > 0 ) continue;
+
       source_ep = jsPlumb.addEndpoint(fromID, sourceOption);
       target_ep = jsPlumb.addEndpoint(toID, targetOption);
       jsPlumb.connect({ source: source_ep, target: target_ep, overlays:overlays });
