@@ -1,15 +1,19 @@
 require 'test_helper'
 
 class SectionTest < ActiveSupport::TestCase
-  fixtures :all
+  should belong_to(:chart)
+  should have_many(:section_lines)
 
-  test "section one" do
-    s = Section.find_by_name('Section One')
-    assert s.respond_to?(:section_lines)
+  context "section one" do
+    fixtures :all
+    setup do
+      @section = Section.find_by_name('Section One')
+    end
 
-    ss = s.sibling_sections
-    assert_equal ["Section Three", "Section Two"], ss.map{ |s| s.name }.sort
-
+    should "tell me about sibling sections" do
+      assert @section.respond_to?(:sibling_sections)
+      assert_equal ["Section Three", "Section Two"], @section.sibling_sections.map{ |s| s.name }.sort
+    end
   end
 
 end

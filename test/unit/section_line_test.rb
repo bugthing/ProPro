@@ -1,14 +1,6 @@
 require 'test_helper'
 
 class SectionLineTest < ActiveSupport::TestCase
-  fixtures :all
-
-  test "section line one" do
-    SectionLine.all.each do |sl|
-      assert sl
-      assert sl.section
-      assert sl.tool
-    end
-  end
-
+  should belong_to(:tool)
+  should belong_to(:section)
 end

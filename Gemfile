@@ -26,10 +26,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem 'jquery-ui-rails'
 end
-group :test do
-  gem "mocha", :require => false
-  gem 'shoulda'
-end
 
 gem 'jquery-rails'
 
@@ -57,3 +53,8 @@ gem "ember-rails"
 gem "rabl"
 gem "mongodb", "~> 2.1.0"
 gem "bson_ext"
+
+group :test do
+  gem "mocha", '=0.13.1', :require => false
+  gem 'shoulda'
+end

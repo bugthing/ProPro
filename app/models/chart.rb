@@ -6,7 +6,7 @@ class Chart < ActiveRecord::Base
   has_many :sections, :order => 'created_at'
   has_many :readings
  
-  validates :name,  :presence => true
+  validates :name, :presence => true,  :uniqueness => true
 
   after_initialize :add_default_sections
 

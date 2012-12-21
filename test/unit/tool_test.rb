@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ToolTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should have_many(:section_lines)
+  should  belong_to(:user_group)
 end
