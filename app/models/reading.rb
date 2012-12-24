@@ -20,4 +20,8 @@ class Reading < ActiveRecord::Base
     end
   end
 
+  def current_html_output
+    "<b> TO DO </b>"
+  end
+
 end

@@ -1,5 +1,4 @@
 class SectionsController < ApplicationController
-  include ProPro::ControllerMixin
   before_filter(:require_login)
 
   respond_to :html, :json
@@ -33,7 +32,8 @@ class SectionsController < ApplicationController
       # .. create a new section line based NextButton tool..
       new_section_line = from_section.section_lines.create({ :tool_id => Tool.find_by_name('Next Button').id })
       # .. get propro tool object..
-      tool = propro_tool( new_section_line )
+      #tool = propro_tool( new_section_line )
+      tool = new_section_line.propro_tool
       # .. get edit data..
       data = tool.adapter.edit_data
       # .. add it to data..
@@ -94,7 +94,8 @@ class SectionsController < ApplicationController
   private
 
   def section_line_tools
-    @section.section_lines.map { |sl| propro_tool(sl) }
+    #@section.section_lines.map { |sl| propro_tool(sl) }
+    @section.section_lines.map { |sl| sl.propro_tool }
   end
 
   # TBA - move complexity into simple private methods
