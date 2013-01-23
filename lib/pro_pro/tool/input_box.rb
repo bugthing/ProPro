@@ -8,6 +8,9 @@ class ProPro::Tool::PlainText < ProPro::Tool
       }
     )
   end
+  def read_html
+    "<div>#{adapter.edit_data['text']}</div>"
+  end
 end
 
 class ProPro::Tool::InputBox < ProPro::Tool
@@ -24,6 +27,12 @@ class ProPro::Tool::InputBox < ProPro::Tool
         placeholder: "Label for this input box"
       },
     )
+  end
+  def read_html
+    "<div>
+        <label>#{adapter.edit_data['data_label']}</label>
+        <input type='text' name='#{adapter.edit_data['data_name']}' value=''>
+    </div>"
   end
 end
 
@@ -44,5 +53,10 @@ class ProPro::Tool::NextButton < ProPro::Tool
         label: "Onward Section",
       },
     )
+  end
+  def read_html
+    "<div>
+        <input type='submit' name='#{adapter.edit_data['data_name']}' value='#{adapter.edit_data['button_text']}'>
+    </div>"
   end
 end

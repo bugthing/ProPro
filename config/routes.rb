@@ -4,6 +4,8 @@ RailsApp::Application.routes.draw do
   match 'builder' => 'builder#index'
   match 'builder/:id' => "builder#show"
   match 'builder/:id/connections' => "builder#connections"
+  match 'reader/:id' => "reader#show"
+  match 'reader/:id/submission' => "reader#update"
 
   get "log_out" => "sessions#destroy", :as => "log_out"
   get "log_in" => "sessions#new", :as => "log_in"

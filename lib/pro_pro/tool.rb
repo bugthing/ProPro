@@ -1,7 +1,7 @@
 
 # To be replaced with some gem .. but what?..
 module ProPro::HtmlFormHelpers
-  def editor_name_for(base_name)
+  def input_name_for(base_name)
     "#{base_name}_#{adapter.section_line_ref}"
   end
   def editor_value_for(base_name)
@@ -14,15 +14,15 @@ module ProPro::HtmlFormHelpers
     form_cfg.each_pair do |name, cfg|
         html_form += "
     <div>
-      <label for='#{ editor_name_for( name ) }'> #{ cfg[:label] } </label>
+      <label for='#{ input_name_for( name ) }'> #{ cfg[:label] } </label>
       <div class='controls'>
         "
         if ( cfg[:type] == :text )
-            html_form += "<input placeholder='#{ cfg[:placeholder] }' type='text' name='#{ editor_name_for( name ) }' value='#{ editor_value_for( name ) }'/>"
+            html_form += "<input placeholder='#{ cfg[:placeholder] }' type='text' name='#{ input_name_for( name ) }' value='#{ editor_value_for( name ) }'/>"
         elsif ( cfg[:type] == :textarea )
-            html_form += "<textarea  placeholder='#{ cfg[:placeholder] }' name='#{ editor_name_for( name ) }'>#{ editor_value_for( name ) }</textarea>"
+            html_form += "<textarea  placeholder='#{ cfg[:placeholder] }' name='#{ input_name_for( name ) }'>#{ editor_value_for( name ) }</textarea>"
         elsif ( cfg[:type] == :section_select )
-            html_form += "<select name='#{ editor_name_for( name ) }'>"
+            html_form += "<select name='#{ input_name_for( name ) }'>"
             selected_value = editor_value_for( name )
             all_other_sections.each do |section|
               html_form += "<option value='#{section.id}' #{ section.id == selected_value.to_i ? 'selected=true' : '' }>#{section.name}</option>"
@@ -68,6 +68,12 @@ class ProPro::Tool
   # edit this tool.
   #   returns: String
   def edit_html
+    ''
+  end
+
+  # String representing the HTML used when reading this tool
+  #   returns: String
+  def read_html
     ''
   end
 

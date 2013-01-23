@@ -21,7 +21,10 @@ class Reading < ActiveRecord::Base
   end
 
   def current_html_output
-    "<b> TO DO </b>"
+    return "" unless current_reading_line # there should never be no current_reading_line!
+    current_reading_line.section.section_lines.map do |sl|
+      sl.propro_tool.read_html
+    end
   end
 
 end
