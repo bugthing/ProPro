@@ -1,8 +1,8 @@
 
-reading_line_one:
+reading_section_one:
   reading: reading_one
   section: section_one
 
-reading_line_two:
+reading_section_two:
   reading: reading_one
   section: section_two

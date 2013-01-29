@@ -6,11 +6,11 @@
   <%= hidden_field_tag 'section_id', @section.id  %>
 <% end %>
 
-<% if ( @section_line_tools ) then %>
+<% if ( @section.section_lines.size > 0 ) then %>
   <%= form_for @section, :remote => true, :html => { :id => 'section-form' } do |f| %>
     <div class="accordion" id="section-builder-lines"> 
-      <% @section_line_tools.each do |section_line_tool| 
-        section_line = section_line_tool.adapter.section_line
+      <% @section.section_lines.each do |section_line| 
+        section_line_tool = section_line.propro_tool
       %>
         <%= render :partial => "section_line", :locals => { :section_line => section_line, :section_line_tool => section_line_tool }  %>
       <% end %>

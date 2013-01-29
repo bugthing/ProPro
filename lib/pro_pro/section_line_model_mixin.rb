@@ -6,11 +6,11 @@ and the code that actually executes the ProPro processes.
 
 =end
 
-module ProPro::ModelMixin
+module ProPro::SectionLineModelMixin
 
   def propro_tool
     tool_name = self.tool.name
-    propro_tool = tool_class( tool_name ).new( propro_adapter() )
+    propro_tool = tool_class( tool_name ).new( self.id, self.section.sibling_sections, edit_data )
   end
 
   private
@@ -24,9 +24,12 @@ module ProPro::ModelMixin
     end
   end
 
-  def propro_adapter
+  def edit_data
+
+    store_id = "section_#{ self.id }"
+
     propro_adapter = if ( PROPRO_CONFIG['adapter'] == 'yaml' )
-      ProPro::SectionAdapter::Yaml.new( self, PROPRO_CONFIG['db_dir_path'] )
+      ProPro::DataStore::Yaml.new( store_id, { db_dir_path: PROPRO_CONFIG['db_dir_path'] } )
     elsif ( PROPRO_CONFIG['adapter'] == 'mongodb' )
       ProPro::SectionAdapter::MongoDB.new( self,
                                           PROPRO_CONFIG['mdb_host'], 
@@ -35,7 +38,7 @@ module ProPro::ModelMixin
                                           PROPRO_CONFIG['mdb_user'], 
                                           PROPRO_CONFIG['mdb_pass'] )
     else
-      ProPro::SectionAdapter.new( section_line )
+      ProPro::DataStore( store_id )
     end
   end
 

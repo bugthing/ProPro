@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121220202836) do
+ActiveRecord::Schema.define(:version => 20130124185147) do
 
   create_table "charts", :force => true do |t|
     t.string   "name"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 20121220202836) do
 
   add_index "charts", ["user_group_id"], :name => "index_charts_on_user_group_id"
 
-  create_table "reading_lines", :force => true do |t|
+  create_table "reading_sections", :force => true do |t|
     t.integer  "reading_id"
     t.integer  "section_id"
     t.datetime "created_at", :null => false
@@ -31,9 +31,9 @@ ActiveRecord::Schema.define(:version => 20121220202836) do
 
   create_table "readings", :force => true do |t|
     t.integer  "chart_id"
-    t.integer  "current_reading_line_id"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+    t.integer  "current_reading_section_id"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "section_lines", :force => true do |t|

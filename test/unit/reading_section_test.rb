@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ReadingLineTest < ActiveSupport::TestCase
+class ReadingSectionTest < ActiveSupport::TestCase
   should belong_to(:reading)
   should belong_to(:section)
 end

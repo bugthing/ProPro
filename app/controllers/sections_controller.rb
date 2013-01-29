@@ -10,7 +10,6 @@ class SectionsController < ApplicationController
 
   def show
     @section = Section.find(params[:id])
-    @section_line_tools = section_line_tools
     respond_with do |format|
       format.html { render "show", :layout => false }
       format.json { render "show" }
@@ -32,14 +31,9 @@ class SectionsController < ApplicationController
       # .. create a new section line based NextButton tool..
       new_section_line = from_section.section_lines.create({ :tool_id => Tool.find_by_name('Next Button').id })
       # .. get propro tool object..
-      #tool = propro_tool( new_section_line )
       tool = new_section_line.propro_tool
       # .. get edit data..
-      data = tool.adapter.edit_data
-      # .. add it to data..
-      data['onward_section_id'] = @section.id
-      # .. store data ..
-      tool.adapter.edit_data = data
+      tool.edit_data['onward_section_id'] = @section.id
     end
 
     respond_with do |format|
@@ -54,9 +48,9 @@ class SectionsController < ApplicationController
     # TBA- Add tests for this!
     # process the params to pull out and submit section line
     # data to each propro tool (section line tool)
-    section_line_tools.each do |propro_tool|
+    @section.section_lines.each do |section_line|
 
-      section_line_id = propro_tool.adapter.section_line.id
+      section_line_id = section_line.id
       data = {}
 
       params.each do |fname, fdata|
@@ -66,16 +60,18 @@ class SectionsController < ApplicationController
         end
       end
 
-      propro_tool.adapter.edit_data = data if ( data.keys.size > 0 )
+      if ( data.keys.size > 0 )
+        section_line.propro_tool.edit_data.clear
+        data.each_pair { |k,v| section_line.propro_tool.edit_data[k] = v }
+      end
+
     end
 
-    # Here we deal with sections posstional data (if we got some)
+    # Here we deal with sections possitional data (if we got some)
     [:pos_left,:pos_top].each do |attr|
       @section.send(attr.to_s+'=', params[attr].to_i) unless ( params[attr].nil? )
       @section.save
     end
-
-    @section_line_tools = section_line_tools
 
     respond_with do |format|
       format.html { render "show", :layout => false }
@@ -92,11 +88,6 @@ class SectionsController < ApplicationController
   end
 
   private
-
-  def section_line_tools
-    #@section.section_lines.map { |sl| propro_tool(sl) }
-    @section.section_lines.map { |sl| sl.propro_tool }
-  end
 
   # TBA - move complexity into simple private methods
   def extract_hashes_of_section_line_data

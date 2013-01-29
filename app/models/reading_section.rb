@@ -1,4 +1,5 @@
-class ReadingLine < ActiveRecord::Base
+class ReadingSection < ActiveRecord::Base
+  include ProPro::ReadingSectionModelMixin
   belongs_to :reading
   belongs_to :section
   attr_accessible :reading_id
