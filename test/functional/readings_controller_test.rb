@@ -18,11 +18,11 @@ class ReadingsControllerTest < ActionController::TestCase
 
   context "with a reading id" do
     setup do
-      @reading_id = Reading.all.first.id
+      @reading = Reading.all.first
     end
     context "load a reading" do
       setup do
-        get :show, :id => @reading_id
+        get :show, { id: @reading.id }
       end
       should assign_to(:reading)
     end

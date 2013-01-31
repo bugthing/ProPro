@@ -1,3 +1,4 @@
+
 class ReaderController < ApplicationController
 
   before_filter :load_or_create_reading
@@ -6,24 +7,20 @@ class ReaderController < ApplicationController
   end
 
   def update
-    # TBA- Add tests for this! 
+    # TODO - this is shit! .. fix it!
+    #
     # process the params to pull out and submit section line
     # data to each propro tool (section line tool)
-    # (need to extracted into method as is pretty much same as other method in section_controller!)
     next_section = nil
-    @reading.current_section.section_lines.each do |sl|
-      section_line_id = sl.id
-      propro_tool = sl.propro_tool
+    read_data_store = @reading.current_reading_section.read_data_store
+    read_data_store.clear
+    params.except(:controller, :action).each do |fname, fdata|
+      read_data_store[ fname ] = fdata
+    end
 
-      data = {}
-      params.each do |fname, fdata|
-        match_data = /^(?<name>.+?)_(?<id>\d+)$/.match( fname )
-        if ( match_data && section_line_id.to_s == match_data[:id].to_s ) then
-          data[ match_data[:name] ] = fdata
-        end
-      end
-      propro_tool.adapter.read_data = data if ( data.keys.size > 0 )
+    @reading.current_reading_section.section.section_lines.each do |section_line|
 
+      propro_tool = section_line.propro_tool( read_data_store )
       # here we ask the tool if it can give the next section
       # .. if so, lets update Reading to have a new ReadingSection
       if ( propro_tool.has_onward_sections? and propro_tool.onward_read_section_id ) then
@@ -31,8 +28,10 @@ class ReaderController < ApplicationController
         @reading.reading_sections << rs
         @reading.current_reading_section_id  = rs.id
         @reading.save!
+        @reading.reload
       end
     end
+
     render 'show'
   end
 
@@ -46,3 +45,4 @@ class ReaderController < ApplicationController
   end
 
 end
+

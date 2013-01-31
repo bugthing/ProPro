@@ -1,8 +1,8 @@
 
-<h1> <%= @reading.current_section.id %> (<%= @reading.id %>) </h2>
+<h1> <%= @reading.current_reading_section.id %> (<%= @reading.id %>) </h1>
 
 <%= form_tag("/reader/#{@reading.id}", :multipart => true, :method => :post) do |f| %>
   <div>
-    <%= raw @reading.current_html_output %>  
+    <%= raw @reading.current_reading_section.read_html %>  
   </div>
 <% end %>

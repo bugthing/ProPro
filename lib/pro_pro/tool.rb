@@ -127,7 +127,7 @@ class ProPro::Tool::NextButton < ProPro::Tool
     osi ? [ osi.to_i ] : []
   end
   def onward_read_section_id
-    read_data[ 'next_button' ] ? edit_data['onward_section_id'] : nil
+    read_data['next_button'] ? edit_data['onward_section_id'] : nil
   end
 
   def edit_html
