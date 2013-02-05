@@ -40,3 +40,9 @@ Used to build this thing
 [jQuery](http://jquery.com)
 [JSPlumb](http://www.jsplumb.org)
 [Deploy Upon](http://openshift.redhat.com)
+
+
+Setup for testing (until I properly fix them)
+=============================================
+    rm db/propro_yaml_dbs/*; rake db:drop; rake db:create; rake db:migrate; rake db:seed; rake db:fixtures:load; rake db:test:prepare;
+

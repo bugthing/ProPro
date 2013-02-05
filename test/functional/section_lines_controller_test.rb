@@ -11,27 +11,37 @@ class SectionLinesControllerTest < ActionController::TestCase
   context "logged in, with a section id" do
     setup do
       log_dave_in_via_session
-      @section_line_id = SectionLine.all.first.id
+      @section_line = SectionLine.all.first
     end
 
     context "a GET JSON request" do
-      setup { get :show, { :id => @section_line_id, :format => :json  } }
+      setup { get :show, { :id => @section_line.id, :format => :json  } }
 
       should "provide section line data" do
         assert_not_nil assigns[:section_line]
         # parse json response.
         body = JSON.parse(response.body)
-        assert_equal body["section_line"]["id"],  @section_line_id
+        assert_equal body["section_line"]["id"],  @section_line.id
       end
     end
 
     context "a GET HTML request" do
-      setup { get :show, { :id => @section_line_id, :format => :html } }
+      setup { get :show, { :id => @section_line.id, :format => :html } }
 
       should "provide section data" do
         assert_not_nil assigns[:section_line]
-        #assert_not_nil assigns[:section_line_tool]
         assert_tag :tag => "div"
+      end
+    end
+
+    context "a POST HTML update request" do
+      setup do
+        post :update, { :id => @section_line.id, :weight => 10, :format => :html }
+      end
+ 
+      should "have updated the section line weight" do
+        @section_line.reload
+        assert_equal 10, @section_line.weight
       end
     end
 
@@ -49,7 +59,6 @@ class SectionLinesControllerTest < ActionController::TestCase
 
     context "a DELETE request" do
       setup do
-        @section_line = SectionLine.all.first
         delete :destroy, chart_id:@section_line.section.chart.id, section_id:@section_line.section.id, id:@section_line.id
       end
 

@@ -1,7 +1,7 @@
 
 <div class="accordion-group section-line-edit" id="section-line-<%= section_line.id %>">
   <div class="accordion-heading">
-    <%= link_to image_tag('/icons/delete.png'), section_line, :method => :delete, :remote => true, :class => "pull-right", :"data-section-line-id" => section_line.id  %>
+    <%= link_to(image_tag('/icons/delete.png'), section_line, :method => :delete, :remote => true, :class => "pull-right", :"data-section-line-id" => section_line.id) %>
     <a class="accordion-toggle" data-toggle="collapse" data-parent="#section-builder-lines" href="#sectionLineCollapse<%= section_line.id %>"> 
       Section Line <%= section_line.id %>
     </a>

@@ -7,6 +7,7 @@ jQuery(function($) {
       // make the section-line edit area  sortable (and hook that up to an ajax call)
       $('#section-builder-lines').sortable({
         stop: function(e, ui) {
+          // TODO - alter this to be more Rails'y (get rails to write out a form, then set and submit here)
           //build list or section-line ids ordered correctly
           var sortedIds = new Array();
           $(this).sortable('toArray').forEach( function(sortedId){
@@ -14,6 +15,14 @@ jQuery(function($) {
             sortedIds.push(id);
           });
           //alert('Order:' + sortedIds.toString() );
+          // loop through IDs in order and post 
+          for (var i=0;i<sortedIds.length;i++) {
+            $.ajax({
+              type: "PUT",
+              url: '/section_lines/' + sortedIds[i],
+              data: { 'weight': i },
+            });
+          };
         }
       });
     });
