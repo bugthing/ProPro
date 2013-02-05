@@ -3,7 +3,19 @@ jQuery(function($) {
 
     // Callback for edit link on section (within chart)
     $(".chart-section-links a:contains('edit')").live('ajax:success', function(event, data, status, xhr) {
-        $('#section-builder').html(data);
+      $('#section-builder').html(data);
+      // make the section-line edit area  sortable (and hook that up to an ajax call)
+      $('#section-builder-lines').sortable({
+        stop: function(e, ui) {
+          //build list or section-line ids ordered correctly
+          var sortedIds = new Array();
+          $(this).sortable('toArray').forEach( function(sortedId){
+            id = $('#' + sortedId).find('a').attr('data-section-line-id')
+            sortedIds.push(id);
+          });
+          //alert('Order:' + sortedIds.toString() );
+        }
+      });
     });
     // Callback from click on onward link for section (within chart)
     $(".chart-section-links a:contains('onward')").live('click', function(event, data, status, xhr) {

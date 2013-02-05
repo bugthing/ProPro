@@ -14,6 +14,15 @@ class SectionLineTest < ActiveSupport::TestCase
       assert @section_line.respond_to?(:propro_tool)
       assert @section_line.propro_tool.kind_of?( ProPro::Tool )
     end
+
+    context "added a new section" do
+      setup do
+        @new_section_line = @section_line.section.section_lines.create({:tool_id => @section_line.tool.id})
+      end
+      should "have a weight of 2 set" do
+        assert_equal 2, @new_section_line.weight
+      end
+    end
   end
 
 end

@@ -8,13 +8,9 @@ class Reading < ActiveRecord::Base
   attr_accessible :chart_id
   attr_accessible :current_reading_section_id
 
-  after_initialize :add_default_reading_section
-
   validates :chart_id,  :presence => true
 
-  #def current_reading_section
-  #  ReadingSection.find(current_reading_section_id)
-  #end
+  after_initialize :add_default_reading_section
 
   def add_default_reading_section
     if (self.new_record? and chart) then 

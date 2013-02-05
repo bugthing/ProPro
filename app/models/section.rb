@@ -4,7 +4,7 @@ class Section < ActiveRecord::Base
   attr_accessible :pos_left
   attr_accessible :pos_top
   belongs_to :chart
-  has_many :section_lines
+  has_many :section_lines, :order => 'weight'
 
   # get all the other sections that belong to the parent chart
   # except this one (self)
