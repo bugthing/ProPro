@@ -19,13 +19,13 @@ class SectionTest < ActiveSupport::TestCase
       setup do
         section_lines = @section.section_lines
         @current_order = section_lines.map {|sl| sl.id}
-        section_lines[0].weight = 2
-        section_lines[1].weight = 1
+        section_lines[0].weight = 1
+        section_lines[1].weight = 0
         section_lines[0].save!
         section_lines[1].save!
       end
       should "return section lines ordered by weight" do
-        assert_equal [@current_order[1], @current_order[0], @current_order[2]], @section.section_lines.map{|sl| sl.id }
+        assert_equal [@current_order[1], @current_order[0], @current_order[2]], @section.section_lines(true).map{|sl| sl.id }
       end
     end
 
