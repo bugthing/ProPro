@@ -23,12 +23,16 @@ class SectionLinesController < ApplicationController
 
   def update
     @section_line = SectionLine.find(params[:id])
-    # Here we deal with section_line weight data (if we got some)
-    [:weight].each do |attr|
-      next unless params[attr]
-      @section_line.weight = params[attr]
-      @section_line.save
-    end
+
+    # this should update the weight property on the model:
+    @section_line.update_attributes(params[:section_line])
+
+    # now lets get all params we dont expect ..
+    data = params.except(:utf8,:_method,:authenticity_token,:section_line,:action,:controller,:id)
+    # ..and save as edit data in the propro tool..
+    @section_line.propro_tool.edit_data.clear
+    data.each_pair { |k,v| @section_line.propro_tool.edit_data[k] = v }
+
     show_section_line
   end
 

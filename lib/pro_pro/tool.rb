@@ -2,7 +2,7 @@
 # To be replaced with some gem .. but what?..
 module ProPro::HtmlFormHelpers
   def input_name_for(base_name)
-    "#{base_name}_#{section_line}"
+    base_name
   end
   def editor_value_for(base_name)
     edit_data[ base_name ]

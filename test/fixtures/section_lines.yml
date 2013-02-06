@@ -1,4 +1,5 @@
 section_line_one:
+  id: 1
   tool: tool_one
   section: section_one
   weight: 0

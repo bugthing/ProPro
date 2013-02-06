@@ -6,16 +6,13 @@
   <%= hidden_field_tag 'section_id', @section.id  %>
 <% end %>
 
-  <%= form_for @section, :remote => true, :html => { :id => 'section-form' } do |f| %>
-    <div class="accordion" id="section-builder-lines"> 
-      <% @section.section_lines.each do |section_line| 
-        section_line_tool = section_line.propro_tool
-      %>
-        <%= render :partial => "section_line", :locals => { :section_line => section_line, :section_line_tool => section_line_tool }  %>
-      <% end %>
-    </div>
-    <%= f.submit "Save Section", :class => 'btn' %>
+<div class="accordion" id="section-builder-lines"> 
+  <% @section.section_lines.each do |section_line| %>
+    <%= render :partial => "section_line", :locals => { :section_line => section_line }  %>
   <% end %>
+</div>
+
+<%= link_to "Save Section Changes", 'javascript:;', :id => 'section-line-edit-forms-save', :class => 'btn' %>
 
 <div class="btn-group" id="tools">
   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> Tools <span class="caret"></span></a>

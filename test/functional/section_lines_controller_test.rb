@@ -11,7 +11,7 @@ class SectionLinesControllerTest < ActionController::TestCase
   context "logged in, with a section id" do
     setup do
       log_dave_in_via_session
-      @section_line = SectionLine.all.first
+      @section_line = SectionLine.find(1)
     end
 
     context "a GET JSON request" do
@@ -36,12 +36,24 @@ class SectionLinesControllerTest < ActionController::TestCase
 
     context "a POST HTML update request" do
       setup do
-        post :update, { :id => @section_line.id, :weight => 10, :format => :html }
+        post :update, { :id => @section_line.id, :section_line => {:weight => 10}, :format => :html }
       end
  
       should "have updated the section line weight" do
         @section_line.reload
         assert_equal 10, @section_line.weight
+      end
+    end
+
+    context "a POST HTML update request with tool data" do
+      setup do
+        @tool_data = { :text => 'Test text' }
+        post :update, { :id => @section_line.id, :section_line => {:weight => 10}, :format => :html }.merge(@tool_data)
+      end
+ 
+      should "have updated the section line tool" do
+        @section_line.reload
+        assert_equal 'Test text', @section_line.propro_tool.edit_data['text']
       end
     end
 

@@ -5,26 +5,7 @@ jQuery(function($) {
     $(".chart-section-links a:contains('edit')").live('ajax:success', function(event, data, status, xhr) {
       $('#section-builder').html(data);
       // make the section-line edit area  sortable (and hook that up to an ajax call)
-      $('#section-builder-lines').sortable({
-        stop: function(e, ui) {
-          // TODO - alter this to be more Rails'y (get rails to write out a form, then set and submit here)
-          //build list or section-line ids ordered correctly
-          var sortedIds = new Array();
-          $(this).sortable('toArray').forEach( function(sortedId){
-            id = $('#' + sortedId).find('a').attr('data-section-line-id')
-            sortedIds.push(id);
-          });
-          //alert('Order:' + sortedIds.toString() );
-          // loop through IDs in order and post 
-          for (var i=0;i<sortedIds.length;i++) {
-            $.ajax({
-              type: "PUT",
-              url: '/section_lines/' + sortedIds[i],
-              data: { 'weight': i },
-            });
-          };
-        }
-      });
+      $('#section-builder-lines').sortable();
     });
     // Callback from click on onward link for section (within chart)
     $(".chart-section-links a:contains('onward')").live('click', function(event, data, status, xhr) {
@@ -40,13 +21,13 @@ jQuery(function($) {
       $("a#chart-connect").trigger('click'); // refresh chart
     });
 
-    // callback from new section modal form
+    // callback from new-section modal-form
     $('#newsectionModal form').live('ajax:success', function(event, data, status, xhr) {
       $('#newsectionModal').modal('hide');
       $('#chart-sections').append(data);
       $("a#chart-connect").trigger('click'); // refresh chart
     });
-    // .. hook up the new section modal form submit button..
+    // .. hook up the new section modal-form submit button..
     $('#newsectionModal .btn-primary').click(function(){
       $('#newsectionModal form').submit();
     })
@@ -80,8 +61,20 @@ jQuery(function($) {
         $('#section-builder-lines').append(data);
     });
 
-    // Callback from submission for section edit
-    $('form#section-form').live('ajax:success', function(event, data, status, xhr) {
+    // hook up the user click 'Save' for section-line editting forms
+    // ..this sets the weight(order) within each form and submits..
+    $('a#section-line-edit-forms-save').live('click', function(event) {
+      sortedIds = $('#section-builder-lines').sortable('toArray')
+      for (var i=0;i<sortedIds.length;i++) {
+        form = $('#' + sortedIds[i]).find('form');
+        form.find('#section_line_weight').val( i ); // set weight in the form
+        form.submit();
+      }
+    });
+
+    // Callback from section-line-edit form submission
+    $('form.section-line-edit').live('ajax:success', function(event, data, status, xhr) {
+      // FIXME: here I should refresh the chart ... but only need once! the last section-line has returned..
       $("a#chart-connect").trigger('click'); // refresh chart
     });
 

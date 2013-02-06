@@ -32,7 +32,7 @@ class SectionsController < ApplicationController
       new_section_line = from_section.section_lines.create({ :tool_id => Tool.find_by_name('Next Button').id })
       # .. get propro tool object..
       tool = new_section_line.propro_tool
-      # .. get edit data..
+      # .. set edit data..
       tool.edit_data['onward_section_id'] = @section.id
     end
 
@@ -44,28 +44,6 @@ class SectionsController < ApplicationController
 
   def update
     @section = Section.find(params[:id])
-
-    # TBA- Add tests for this!
-    # process the params to pull out and submit section line
-    # data to each propro tool (section line tool)
-    @section.section_lines.each do |section_line|
-
-      section_line_id = section_line.id
-      data = {}
-
-      params.each do |fname, fdata|
-        match_data = /^(?<name>.+?)_(?<id>\d+)$/.match( fname )
-        if ( match_data && section_line_id.to_s == match_data[:id].to_s ) then
-          data[ match_data[:name] ] = fdata
-        end
-      end
-
-      if ( data.keys.size > 0 )
-        section_line.propro_tool.edit_data.clear
-        data.each_pair { |k,v| section_line.propro_tool.edit_data[k] = v }
-      end
-
-    end
 
     # Here we deal with sections possitional data (if we got some)
     [:pos_left,:pos_top].each do |attr|
@@ -85,16 +63,6 @@ class SectionsController < ApplicationController
 
     # TBA - remove all section lines +tools (perhaps any subsections!?)
     render "show" # for now just render the show tpl
-  end
-
-  private
-
-  # TBA - move complexity into simple private methods
-  def extract_hashes_of_section_line_data
-  end
-  def submit_each_section_lines_data
-  end
-  def create_onward_section_line
   end
 
 end

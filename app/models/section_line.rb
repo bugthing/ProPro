@@ -3,7 +3,7 @@ class SectionLine < ActiveRecord::Base
   include ProPro::SectionLineModelMixin
   belongs_to :tool
   belongs_to :section
-  attr_accessible :tool_id
+  attr_accessible :tool_id, :weight
 
   after_initialize :apply_weight_new_section_line
 
