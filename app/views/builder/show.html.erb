@@ -9,10 +9,7 @@
   <div class="well">
     <h1> <%= @chart.name %> </h1>
     <div id="section-builder">
-      <i> 
-        Use the chart builder on the right to 
-        add sections the edit them in this area
-      </i>
+      <i> Use the chart builder on the right to add sections then edit them in this area </i>
     </div>
   </div>
 </div>
@@ -110,7 +107,7 @@
           $.ajax({
             type: 'PUT',
             url: '/sections/' + sectionID,
-            data: { 'pos_left': pos_left, 'pos_top': pos_top }
+            data: { 'section[pos_left]': pos_left, 'section[pos_top]': pos_top }
           });
         }
       }

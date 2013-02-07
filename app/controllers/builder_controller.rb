@@ -15,6 +15,11 @@ class BuilderController < ApplicationController
     @sections_connections = sections_connections
   end
 
+  def show_chart_section
+    @section = Section.find(params[:section_id])
+    render :partial => 'builder/chart_section', :locals => { :section => @section }, :layout => false
+  end
+
   private
 
   def sections_connections

@@ -4,7 +4,7 @@ jQuery(function($) {
     // Callback for edit link on section (within chart)
     $(".chart-section-links a:contains('edit')").live('ajax:success', function(event, data, status, xhr) {
       $('#section-builder').html(data);
-      // make the section-line edit area  sortable (and hook that up to an ajax call)
+      // make the section-line edit area sortable (and hook that up to an ajax call)
       $('#section-builder-lines').sortable();
     });
     // Callback from click on onward link for section (within chart)
@@ -40,25 +40,37 @@ jQuery(function($) {
     $("a[data-chart-id]").live('ajax:success', function(event, data, status, xhr) {
     });
 
+    // Callback for section name edit form 
+    $('form#edit-section-name').live('ajax:success', function(event, data, status, xhr) {
+
+      // reload section within chart
+      var sectionId = $(event.target).attr('data-section-id');
+      $.get('/builder/chartsection/' + sectionId, function(data) {
+        $("#section-" + sectionId).replaceWith(data)
+      }); 
+
+      $("a#chart-connect").trigger('click'); // refresh chart
+    });
+
     // Callback for delete link on section line within section editor
     $('#section-builder-lines a[data-method=delete]').live('ajax:success', function(event, data, status, xhr) {
-        // remove the section line elemente
-        var section_line_id = $(event.target).attr('data-section-line-id');
-        $('#section-line-' + section_line_id).remove();
+      // remove the section line elemente
+      var section_line_id = $(event.target).attr('data-section-line-id');
+      $('#section-line-' + section_line_id).remove();
     });
 
     // Callback from clicking a tool link
     $('#tools a[data-remote=true]').live('click', function(event){
-        // set tool id and submit new section line form..
-        var tool_id = $(event.target).attr('data-tool-id');
-        var form = $('form#new-section-line-tool-form');
-        form.find('input[name=tool_id]').val(tool_id);
-        form.trigger("submit");
+      // set tool id and submit new section line form..
+      var tool_id = $(event.target).attr('data-tool-id');
+      var form = $('form#new-section-line-tool-form');
+      form.find('input[name=tool_id]').val(tool_id);
+      form.trigger("submit");
     });
 
     // Callback from submission for new section_line via tool 
     $('form#new-section-line-tool-form').live('ajax:success', function(event, data, status, xhr) {
-        $('#section-builder-lines').append(data);
+      $('#section-builder-lines').append(data);
     });
 
     // hook up the user click 'Save' for section-line editting forms
@@ -70,12 +82,13 @@ jQuery(function($) {
         form.find('#section_line_weight').val( i ); // set weight in the form
         form.submit();
       }
+      // finally submit the section name edit form 
+      $('form#edit-section-name').submit();
     });
 
     // Callback from section-line-edit form submission
     $('form.section-line-edit').live('ajax:success', function(event, data, status, xhr) {
-      // FIXME: here I should refresh the chart ... but only need once! the last section-line has returned..
-      $("a#chart-connect").trigger('click'); // refresh chart
+      // nothing required (charted is refreshed after edit-section-name form)
     });
 
 });

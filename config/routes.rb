@@ -4,6 +4,7 @@ RailsApp::Application.routes.draw do
   match 'builder' => 'builder#index'
   match 'builder/:id' => "builder#show"
   match 'builder/:id/connections' => "builder#connections"
+  match 'builder/chartsection/:section_id' => "builder#show_chart_section"
   match 'reader/:id' => "reader#show", :via => :get
   post 'reader/:id' => "reader#update"
 

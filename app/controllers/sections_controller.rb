@@ -45,11 +45,8 @@ class SectionsController < ApplicationController
   def update
     @section = Section.find(params[:id])
 
-    # Here we deal with sections possitional data (if we got some)
-    [:pos_left,:pos_top].each do |attr|
-      @section.send(attr.to_s+'=', params[attr].to_i) unless ( params[attr].nil? )
-      @section.save
-    end
+    # this should update the name, pos_left, pos_top property on the model:
+    @section.update_attributes(params[:section])
 
     respond_with do |format|
       format.html { render "show", :layout => false }

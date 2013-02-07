@@ -1,5 +1,9 @@
 
-<h3><%= @section.name %></h3>
+<h3 id='section-edit-area'>
+  <%= form_for @section, :remote => true, :html => {:id => 'edit-section-name', :"data-section-id" => @section.id} do |f| %>
+    <%= f.text_field :name %>
+  <% end %>
+</h3>
 
 <%= form_for SectionLine.new, :remote => true, :html => { :id => 'new-section-line-tool-form' } do |f| %>
   <%= hidden_field_tag 'tool_id', 0  %>

@@ -52,6 +52,18 @@ class BuilderControllerTest < ActionController::TestCase
         assert_not_nil assigns[:sections_connections]
       end
     end
+
+    context 'requesting chart section html' do
+      setup do
+        @section = Section.all.first
+        get :show_chart_section, { :section_id => @section.id }
+      end
+  
+      should "provide section html" do
+        assert_not_nil assigns[:section]
+        assert_tag :tag => "div", :attributes => { id:"section-#{@section.id}" }
+      end
+    end
   end
 
 end

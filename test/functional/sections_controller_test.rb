@@ -62,7 +62,7 @@ class SectionsControllerTest < ActionController::TestCase
 
     context "a POST HTML update request with positional data" do
       setup do
-        post :update, { :id => @section_id, :pos_left => 10, :pos_top => 20, :format => :html }
+        post :update, { :id => @section_id, :section => { :pos_left => 10, :pos_top => 20 }, :format => :html }
       end
       should "provide section form with data" do
         assert_equal 10, assigns[:section].pos_left
