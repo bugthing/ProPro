@@ -10,7 +10,7 @@ class Api::ChartsControllerTest < ActionController::TestCase
   context "GET list" do
     setup { get :index, valid_params }
     should "give list of chart info" do
-      expected = { "charts" => [ {"id" => 111, "name"=>"Chart One"} ] }
+      expected = { "charts" => [ {"id" => 835977029, "name"=>"Chart One"} ] }
       assert_equal expected.to_json, response.body 
     end
   end
@@ -18,7 +18,7 @@ class Api::ChartsControllerTest < ActionController::TestCase
   context "GET details" do
     setup { get :show, valid_params.merge(id:charts(:chart_one).id) }
     should "give json of chart data" do
-      expected = {"id" => 111, "name"=>"Chart One"}
+      expected = {"id" => 835977029, "name"=>"Chart One"}
       assert_equal expected.to_json, response.body 
     end
   end
