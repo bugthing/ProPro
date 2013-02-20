@@ -2,32 +2,8 @@
 <div class="span12">
 
     <div class="hero-unit">
-
         <h1>Sign Up</h1>
-        
-        <%= form_for( @user, :class => "navbar-form pull-left") do |f| %>
-          <% if @user.errors.any? %>
-            <div class="error_messages">
-              <h2>Form is invalid</h2>
-              <ul>
-                <% for message in @user.errors.full_messages %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-          <p>
-          <%= f.text_field :email, :placeholder => "Email" %>
-          </p>
-          <p>
-          <%= f.password_field :password, :placeholder => "Password" %>
-          </p>
-          <p>
-          <%= f.password_field :password_confirmation, :placeholder => "Confirm Password" %>
-          </p>
-          <p class="button"><%= f.submit(:class => "btn") %></p>
-        <% end %>
-
+        <%= render partial:'form', locals:{user:@user} %>
     </div>
 
 </div>

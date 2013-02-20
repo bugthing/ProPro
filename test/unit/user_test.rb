@@ -28,22 +28,23 @@ class UserTest < ActiveSupport::TestCase
       assert @user.valid?
     end
 
-    should "user validates and encrypts password correctly" do
-      @user.email = "bob@people.com"
-      assert ! @user.valid?
-      @user.password_salt = "$2a$10$rYGIB5FtJ4C2vqwnpFpD/e"
-      @user.password = "password"
-      @user.save!
-      assert_equal "$2a$10$rYGIB5FtJ4C2vqwnpFpD/eenDh462MRIJTT7/SU2wYkTlbVSO5rKW", @user.password_hash
-    end
-
-    should "user should authenticate" do
-      @user.email = "bob@people.com"
-      @user.password = "password"
-      @user.save!
-
-      assert ! User.authenticate( "bob@people.com", "assword" )
-      assert User.authenticate( "bob@people.com", "password" )
+    context "creating a user" do
+      setup do
+        @user.email = "bob@people.com"
+        @user.password_salt = "$2a$10$rYGIB5FtJ4C2vqwnpFpD/e"
+        @user.password = "password"
+        @user.save!
+      end
+      should "have a hashed password" do
+        assert_equal "$2a$10$rYGIB5FtJ4C2vqwnpFpD/eenDh462MRIJTT7/SU2wYkTlbVSO5rKW", @user.password_hash
+      end
+      should "have an API key" do
+        assert_equal "1160db5786aa87a3bfa7eed2aa40dd7e6f61331a", @user.api_key
+      end
+      should "user should authenticate" do
+        assert ! User.authenticate( "bob@people.com", "assword" )
+        assert User.authenticate( "bob@people.com", "password" )
+      end
     end
   end
 

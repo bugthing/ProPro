@@ -1,0 +1,25 @@
+<%# Expects to be passed 'user' as a local %>
+
+  <% if user.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in user.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<%= form_for(user, :class => "navbar-form pull-left") do |f| %>
+  <%= f.text_field :email, :placeholder => "Email" %>
+  </p>
+  <p>
+  <%= f.password_field :password, :placeholder => "Password" %>
+  </p>
+  <p>
+  <%= f.password_field :password_confirmation, :placeholder => "Confirm Password" %>
+  </p>
+  <p class="button"><%= f.submit(:class => "btn") %></p>
+<% end %>
+

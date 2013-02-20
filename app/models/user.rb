@@ -28,7 +28,10 @@ class User < ActiveRecord::Base
       # Now encrypt the password and set that in the column
       self.password_hash = ::BCrypt::Engine.hash_secret(password, password_salt)
     end
+    # generate an API key for the user
+    if self.api_key.nil? and self.email and self.password_salt
+      self.api_key = Digest::SHA1.hexdigest( BCrypt::Engine.hash_secret(email, password_salt) )
+    end
   end
+
 end
-
-

@@ -27,4 +27,9 @@ RailsApp::Application.routes.draw do
   resources :sections 
   resources :section_lines 
 
+  namespace :api do
+    resources :charts, only: [:index, :show]
+  end
+
+
 end

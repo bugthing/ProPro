@@ -3,9 +3,11 @@ user_one:
   user_group: user_group_one
   password_salt: "$2a$10$rYGIB5FtJ4C2vqwnpFpD/e"
   password_hash: "$2a$10$rYGIB5FtJ4C2vqwnpFpD/eenDh462MRIJTT7/SU2wYkTlbVSO5rKW"
+  api_key: ABC123xyz
 
 user_two:
   email: "humpfrey@people.com"
   user_group: user_group_one
   password_salt: "$2a$10$rYGIB5FtJ4C2vqwnpFpD/e"
   password_hash: "$2a$10$rYGIB5FtJ4C2vqwnpFpD/eenDh462MRIJTT7/SU2wYkTlbVSO5rKW"
+  api_key: 9ABC123xyz

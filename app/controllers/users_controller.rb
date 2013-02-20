@@ -20,4 +20,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    require_login
+  end
+
+  def update
+    require_login
+    if ( current_user.update_attributes(params[:user]) )
+      redirect_to root_url, :notice => "Account updated"
+    else
+      flash[:alert] = "Not updated"
+      redirect_to edit_user_url
+    end
+  end
+
 end

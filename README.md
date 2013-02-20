@@ -44,5 +44,5 @@ Used to build this thing
 
 Setup for testing (until I properly fix them)
 =============================================
-    rm db/propro_yaml_dbs/*; rake db:drop; rake db:create; rake db:migrate; rake db:seed; rake db:fixtures:load; rake db:test:prepare;
+    rm db/propro_yaml_dbs/*; rake db:drop; rake db:create; rake db:migrate; rake db:test:prepare; rake db:seed; rake db:fixtures:load
 

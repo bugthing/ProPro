@@ -1,5 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 chart_one:
+  id: 111
   name: Chart One
   user_group: user_group_one

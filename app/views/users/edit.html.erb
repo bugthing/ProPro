@@ -1,0 +1,16 @@
+
+<div class="span12">
+
+    <div class="hero-unit">
+      <h1>Update Account</h1>
+      <%= render partial:'form', locals:{user:current_user} %>
+      <%= button_to 'Log Out', log_out_path, method:'get', class:'btn btn-warning' %>
+    </div>
+
+    <div class="alert alert-info">
+      <strong>API key:</strong> <%= current_user.api_key%>
+    </div>
+
+
+</div>
+
