@@ -21,12 +21,12 @@ module ProPro::SectionLineModelMixin
     propro_adapter = if ( PROPRO_CONFIG['adapter'] == 'yaml' )
       ProPro::DataStore::Yaml.new( store_id, { db_dir_path: PROPRO_CONFIG['db_dir_path'] } )
     elsif ( PROPRO_CONFIG['adapter'] == 'mongodb' )
-      ProPro::SectionAdapter::MongoDB.new( self,
-                                          PROPRO_CONFIG['mdb_host'], 
-                                          PROPRO_CONFIG['mdb_port'], 
-                                          PROPRO_CONFIG['mdb_dbname'], 
-                                          PROPRO_CONFIG['mdb_user'], 
-                                          PROPRO_CONFIG['mdb_pass'] )
+      ProPro::SectionAdapter::MongoDB.new( self, {
+                                          mdb_host: PROPRO_CONFIG['mdb_host'], 
+                                          mdb_port: PROPRO_CONFIG['mdb_port'], 
+                                          mdb_name: PROPRO_CONFIG['mdb_name'], 
+                                          mdb_user: PROPRO_CONFIG['mdb_user'], 
+                                          mdb_pass: PROPRO_CONFIG['mdb_pass'] } )
     else
       ProPro::DataStore( store_id )
     end
