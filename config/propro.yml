@@ -13,5 +13,5 @@ production:
   mdb_port: <%=ENV['OPENSHIFT_MONGODB_DB_PORT']%>
   mdb_user: <%=ENV['OPENSHIFT_MONGODB_DB_USERNAME']%>
   mdb_pass: <%=ENV['OPENSHIFT_MONGODB_DB_PASSWORD']%>
-  mdb_dbname: <%=ENV['OPENSHIFT_APP_NAME']%>
+  mdb_name: <%=ENV['OPENSHIFT_APP_NAME']%>
 

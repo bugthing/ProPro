@@ -57,6 +57,67 @@ class ProPro::DataStore::Yaml < ProPro::DataStore
 
 end
 
+require 'mongo'
+class ProPro::DataStore::MongoDB < ProPro::DataStore
+  include Mongo
+  attr_reader :mongo, :mongo_db_name, :mongo_coll_name
+
+  def initialize( id, opts )
+    super
+    @mongo_coll_name = 'propro_data'
+    @mongo_db_name = config[:mdb_name] || 'propro'
+    db_host = config[:mdb_host] || 'localhost'
+    db_port = config[:mdb_port] || '27017'
+    db_user = config[:mdb_user] || nil 
+    db_pass = config[:mdb_pass] || nil 
+
+    begin
+      @mongo = MongoClient.new(db_host, db_port)
+    rescue
+      # ignore mongo errors to raise my own.. (not sure why)
+    end
+
+    raise "Could not get MongoDB connection" unless @mongo
+
+    if ( db_user && db_pass ) then
+      @mongo.add_auth(@mongo_db_name, db_user, db_pass)
+    end
+
+    @data = load_from_db
+  end
+
+  def []=(k,v)
+    super 
+    write_to_db
+  end
+  def clear
+    super 
+    write_to_db
+  end
+
+  private
+
+  def write_to_db
+    mongo_coll.update( mongo_selector, @data.merge(mongo_selector), { :upsert => true } )
+  end
+
+  def load_from_db
+    mongo_data = mongo_coll.find_one( mongo_selector )
+    mongo_data ? mongo_data : {}
+  end
+
+  def mongo_coll
+    db     = @mongo[@mongo_db_name]
+    coll   = db[ @mongo_coll_name ]
+    return coll
+  end
+
+  def mongo_selector
+    { '_identifier' => @identifier }
+  end
+
+end
+
 #class ProPro::SectionAdapter
 #  attr_reader :section_line
 #
