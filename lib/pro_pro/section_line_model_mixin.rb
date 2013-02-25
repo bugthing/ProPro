@@ -21,7 +21,7 @@ module ProPro::SectionLineModelMixin
     propro_adapter = if ( PROPRO_CONFIG['adapter'] == 'yaml' )
       ProPro::DataStore::Yaml.new( store_id, { db_dir_path: PROPRO_CONFIG['db_dir_path'] } )
     elsif ( PROPRO_CONFIG['adapter'] == 'mongodb' )
-      ProPro::SectionAdapter::MongoDB.new( self, {
+      ProPro::DataStore::MongoDB.new( self, {
                                           mdb_host: PROPRO_CONFIG['mdb_host'], 
                                           mdb_port: PROPRO_CONFIG['mdb_port'], 
                                           mdb_name: PROPRO_CONFIG['mdb_name'], 
