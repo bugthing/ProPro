@@ -1,0 +1,8 @@
+
+.fillbackground {
+  background: url(../images/blue_header.gif) no-repeat center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}

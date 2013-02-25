@@ -1,0 +1,24 @@
+
+    <div class="one-third column">
+      <h3>Charts</h3>
+      <ul class="square">
+      <% @charts.each do |c| %>
+        <li><%= c['name'] %></li>
+      <% end %>
+      </ul>
+    </div>
+
+    <div class="one-third column">
+        <h3>Some column: <%= @test %></h3>
+        <p>Some data</p>
+        <ul class="square">
+            <li><strong>I seen some things</strong>: And done some stuff </li>
+            <li><strong>I wouldn't</strong>: recommend it</li>
+        </ul>
+    </div>
+
+    <div class="one-third column">
+        <h3>Some column</h3>
+        <p>Some data</p>
+    </div>
+
