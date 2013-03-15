@@ -1,5 +1,5 @@
 class ApiController < ActionController::Base
-  protect_from_forgery
+  #protect_from_forgery # turned off due to: WARNING: Can't verify CSRF token authenticity (we authentica api ket every requer anyway)
 
   before_filter :require_api_key
 

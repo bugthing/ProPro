@@ -12,4 +12,11 @@ class Section < ActiveRecord::Base
     self.chart.sections - [self]
   end
 
+  # collection the read_html from each section_line's tool
+  def read_html
+    section_lines.map do |sl|
+      sl.propro_tool.read_html
+    end
+  end
+
 end

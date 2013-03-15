@@ -1,7 +1,7 @@
 
 development:
   chart_api: http://0:3000
-  chart_api_key: ce3e8c0af7841c260ba7988658c568daba60d375
+  chart_api_key: ABC123xyz
 production:
   chart_api: http://propro-bugthing.rhcloud.com
   chart_api_key: 87892414b04143144c7d5b5b807b43574a01c4cb

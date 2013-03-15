@@ -4,6 +4,12 @@ class ReadingSection < ActiveRecord::Base
   attr_accessible :reading_id
   attr_accessible :section_id
 
+  def read_htmls
+    self.section.section_lines.map do |section_line|
+      section_line.propro_tool(read_data_store).read_html
+    end
+  end
+
   def read_html
     self.section.section_lines.inject('') do |str, section_line|
       tool = section_line.propro_tool( read_data_store )

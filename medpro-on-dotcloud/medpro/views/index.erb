@@ -1,24 +1,46 @@
-
     <div class="one-third column">
       <h3>Charts</h3>
+      <p>
+        Click a chart below to start the process
+      </p>
       <ul class="square">
       <% @charts.each do |c| %>
-        <li><%= c['name'] %></li>
+        <li>
+        <a href="/newreading/<%= c['id'] %>"><%= c['name'] %></a>
+        </li>
       <% end %>
       </ul>
     </div>
 
-    <div class="one-third column">
-        <h3>Some column: <%= @test %></h3>
-        <p>Some data</p>
+    <div class="one-third column" id="middle-content">
+        <h3>What is this?</h3>
+        <p>
+        This is the display side of a system that enables an administrator to 
+        build processes using an easy to use, web based interface that is
+        sitting on a external system.
+        </p>
+        <p>
+        This works by interacting with the external system and pulling and
+        pushing data to and from it, authorised by a security token.
+        </p>
         <ul class="square">
-            <li><strong>I seen some things</strong>: And done some stuff </li>
-            <li><strong>I wouldn't</strong>: recommend it</li>
+            <li><strong>Dynamically</strong> updating processes</li>
+            <li><strong>Centrally</strong> controlled processes</li>
         </ul>
     </div>
 
     <div class="one-third column">
-        <h3>Some column</h3>
-        <p>Some data</p>
+      <h3>Readings</h3>
+      <p>
+      Click a date below to continue a reading already started
+      </p>
+      <ul class="square">
+      <% @readings.each do |r| %>
+        <li>
+          <a href="/<%= r['id'] %>"><%= r['created_at'] %></a>
+        </li>
+      <% end %>
+      </ul>
     </div>
 
+    

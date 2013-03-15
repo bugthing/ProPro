@@ -29,6 +29,7 @@ RailsApp::Application.routes.draw do
 
   namespace :api do
     resources :charts, only: [:index, :show]
+    resources :readings, only: [:index, :show, :create, :update]
   end
 
 
