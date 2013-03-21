@@ -41,6 +41,9 @@ Used to build this thing
 [JSPlumb](http://www.jsplumb.org)
 [Deploy Upon](http://openshift.redhat.com)
 
+[Drone.IO](http://drone.io)
+[![Build Status](https://drone.io/github.com/bugthing/ProPro/status.png)](https://drone.io/github.com/bugthing/ProPro/latest)
+
 
 Setup for testing (until I properly fix them)
 =============================================
